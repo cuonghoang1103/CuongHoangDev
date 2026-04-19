@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Content Management - Admin</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+    <link rel="stylesheet" th:href="@{/css/pages/admin.css}">
+</head>
+<body>
+    <div th:replace="~{layout/admin-layout :: admin-layout}">
+        <main class="admin-content">
+            <div class="admin-header">
+                <h1>Content Management</h1>
+                <div class="admin-actions">
+                    <button class="btn btn-primary" onclick="location.href='/admin/content/create/blog'">New Blog Post</button>
+                    <button class="btn btn-secondary" onclick="location.href='/admin/content/create/project'">New Project</button>
+                </div>
+            </div>
+            
+            <div class="admin-tabs">
+                <button class="tab-btn active" data-tab="blogs">Blog Posts</button>
+                <button class="tab-btn" data-tab="projects">Projects</button>
+                <button class="tab-btn" data-tab="products">Products</button>
+                <button class="tab-btn" data-tab="games">Games</button>
+            </div>
+            
+            <div class="tab-content active" id="blogs">
+                <div class="content-table">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Title</th>
+                                <th>Category</th>
+                                <th>Status</th>
+                                <th>Created</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Sample Blog Post</td>
+                                <td>Technology</td>
+                                <td><span class="status published">Published</span></td>
+                                <td>2024-03-15</td>
+                                <td>
+                                    <button class="btn-edit">Edit</button>
+                                    <button class="btn-delete">Delete</button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            
+            <div class="tab-content" id="projects">
+                <div class="content-table">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Title</th>
+                                <th>Technology</th>
+                                <th>Status</th>
+                                <th>Created</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Portfolio Website</td>
+                                <td>Spring Boot</td>
+                                <td><span class="status completed">Completed</span></td>
+                                <td>2024-03-10</td>
+                                <td>
+                                    <button class="btn-edit">Edit</button>
+                                    <button class="btn-delete">Delete</button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </main>
+    </div>
+    
+    <script th:src="@{/js/main.js}"></script>
+    <script th:src="@{/js/pages/admin.js}"></script>
+</body>
+</html>

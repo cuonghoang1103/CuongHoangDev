@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="vi" xmlns:th="http://www.thymeleaf.org"
+      th:replace="layout/master :: master(~{::title}, ~{::content})">
+<head>
+    <title th:text="${title}">Shop</title>
+</head>
+<body>
+    <div th:fragment="content">
+        <!-- Hero Section -->
+        <section class="hero-section gradient-animation">
+            <div class="hero-content">
+                <div class="hero-text">
+                    <div class="logo-animation">
+                        <i class="fas fa-shopping-cart"></i>
+                    </div>
+                    <h1 class="hero-title">
+                        <span class="highlight">Shop</span> - Sản phẩm & Dịch vụ
+                    </h1>
+                    <p class="hero-subtitle">
+                        Khám phá các sản phẩm và dịch vụ chất lượng
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Shop Content -->
+        <section class="content-section">
+            <div class="container">
+                <div class="shop-grid">
+                    <div class="shop-category">
+                        <h3>📚 Khóa học</h3>
+                        <p>Các khóa học lập trình chất lượng cao</p>
+                    </div>
+                    <div class="shop-category">
+                        <h3>💼 Dịch vụ</h3>
+                        <p>Dịch vụ phát triển website và ứng dụng</p>
+                    </div>
+                    <div class="shop-category">
+                        <h3>💻 Source Code</h3>
+                        <p>Mã nguồn các dự án hoàn chỉnh</p>
+                    </div>
+                    <div class="shop-category">
+                        <h3>🔧 IoT</h3>
+                        <p>Sản phẩm và giải pháp IoT</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+</body>
+</html>

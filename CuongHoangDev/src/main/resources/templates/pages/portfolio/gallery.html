@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title th:text="${pageTitle} + ' - CuongHoang Dev'">Portfolio Gallery - CuongHoang Dev</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+    <link rel="stylesheet" th:href="@{/css/pages/portfolio.css}">
+</head>
+<body>
+    <div th:replace="~{layout/header :: header}"></div>
+    
+    <main class="portfolio-gallery-page">
+        <div class="container">
+            <h1>Project Gallery</h1>
+            
+            <div class="gallery-filters">
+                <button class="filter-btn active" data-filter="all">All</button>
+                <button class="filter-btn" data-filter="web">Web Apps</button>
+                <button class="filter-btn" data-filter="mobile">Mobile Apps</button>
+                <button class="filter-btn" data-filter="desktop">Desktop Apps</button>
+            </div>
+            
+            <div class="gallery-grid">
+                <div class="gallery-item" data-category="web">
+                    <img src="/img/portfolio/project1.jpg" alt="Project 1">
+                    <div class="gallery-overlay">
+                        <h3>E-commerce Website</h3>
+                        <p>Full-stack web application</p>
+                        <a href="#" class="btn-view">View Details</a>
+                    </div>
+                </div>
+                
+                <div class="gallery-item" data-category="mobile">
+                    <img src="/img/portfolio/project2.jpg" alt="Project 2">
+                    <div class="gallery-overlay">
+                        <h3>Mobile Banking App</h3>
+                        <p>React Native application</p>
+                        <a href="#" class="btn-view">View Details</a>
+                    </div>
+                </div>
+                
+                <div class="gallery-item" data-category="web">
+                    <img src="/img/portfolio/project3.jpg" alt="Project 3">
+                    <div class="gallery-overlay">
+                        <h3>Portfolio Website</h3>
+                        <p>Personal portfolio site</p>
+                        <a href="#" class="btn-view">View Details</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+    
+    <div th:replace="~{layout/footer :: footer}"></div>
+    
+    <script th:src="@{/js/main.js}"></script>
+    <script th:src="@{/js/portfolio.js}"></script>
+</body>
+</html>

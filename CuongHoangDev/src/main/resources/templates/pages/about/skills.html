@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title th:text="${pageTitle} + ' - CuongHoang Dev'">My Skills - CuongHoang Dev</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+    <link rel="stylesheet" th:href="@{/css/pages/about.css}">
+</head>
+<body>
+    <div th:replace="~{layout/header :: header}"></div>
+    
+    <main class="skills-page">
+        <div class="container">
+            <h1>My Skills & Expertise</h1>
+            <div class="skills-content">
+                <section class="skills-section">
+                    <h2>Technical Skills</h2>
+                    <div class="skills-grid">
+                        <!-- Technical skills will be added here -->
+                        <div class="skill-item">
+                            <h3>Programming Languages</h3>
+                            <p>Java, JavaScript, Python, C#</p>
+                        </div>
+                        <div class="skill-item">
+                            <h3>Frameworks</h3>
+                            <p>Spring Boot, React, Angular, .NET</p>
+                        </div>
+                        <div class="skill-item">
+                            <h3>Databases</h3>
+                            <p>MySQL, PostgreSQL, MongoDB</p>
+                        </div>
+                    </div>
+                </section>
+                
+                <section class="skills-section">
+                    <h2>Soft Skills</h2>
+                    <div class="skills-grid">
+                        <!-- Soft skills will be added here -->
+                        <div class="skill-item">
+                            <h3>Communication</h3>
+                            <p>Excellent verbal and written communication</p>
+                        </div>
+                        <div class="skill-item">
+                            <h3>Problem Solving</h3>
+                            <p>Analytical thinking and creative solutions</p>
+                        </div>
+                    </div>
+                </section>
+            </div>
+        </div>
+    </main>
+    
+    <div th:replace="~{layout/footer :: footer}"></div>
+    
+    <script th:src="@{/js/main.js}"></script>
+</body>
+</html>

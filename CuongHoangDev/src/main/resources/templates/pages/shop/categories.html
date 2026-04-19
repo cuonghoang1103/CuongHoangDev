@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Product Categories - CuongHoang Dev</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+    <link rel="stylesheet" th:href="@{/css/pages/shop.css}">
+</head>
+<body>
+    <div th:replace="~{layout/header :: header}"></div>
+    
+    <main class="shop-categories-page">
+        <div class="container">
+            <h1>Product Categories</h1>
+            <p class="page-description">Browse our products by category</p>
+            
+            <div class="categories-grid">
+                <div class="category-card">
+                    <div class="category-image">
+                        <img src="/img/shop/digital-products.jpg" alt="Digital Products">
+                    </div>
+                    <div class="category-content">
+                        <h3>Digital Products</h3>
+                        <p>Software, templates, and digital assets</p>
+                        <div class="category-stats">
+                            <span class="product-count">15 products</span>
+                            <span class="price-range">$5 - $99</span>
+                        </div>
+                        <a href="/shop/category/digital" class="btn btn-primary">Browse Category</a>
+                    </div>
+                </div>
+                
+                <div class="category-card">
+                    <div class="category-image">
+                        <img src="/img/shop/courses.jpg" alt="Courses">
+                    </div>
+                    <div class="category-content">
+                        <h3>Online Courses</h3>
+                        <p>Programming and development courses</p>
+                        <div class="category-stats">
+                            <span class="product-count">8 products</span>
+                            <span class="price-range">$29 - $199</span>
+                        </div>
+                        <a href="/shop/category/courses" class="btn btn-primary">Browse Category</a>
+                    </div>
+                </div>
+                
+                <div class="category-card">
+                    <div class="category-image">
+                        <img src="/img/shop/consulting.jpg" alt="Consulting">
+                    </div>
+                    <div class="category-content">
+                        <h3>Consulting Services</h3>
+                        <p>Technical consulting and code reviews</p>
+                        <div class="category-stats">
+                            <span class="product-count">5 products</span>
+                            <span class="price-range">$50 - $500</span>
+                        </div>
+                        <a href="/shop/category/consulting" class="btn btn-primary">Browse Category</a>
+                    </div>
+                </div>
+                
+                <div class="category-card">
+                    <div class="category-image">
+                        <img src="/img/shop/tools.jpg" alt="Tools">
+                    </div>
+                    <div class="category-content">
+                        <h3>Development Tools</h3>
+                        <p>Utilities and development tools</p>
+                        <div class="category-stats">
+                            <span class="product-count">12 products</span>
+                            <span class="price-range">$10 - $149</span>
+                        </div>
+                        <a href="/shop/category/tools" class="btn btn-primary">Browse Category</a>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="category-features">
+                <h2>Why Shop With Us?</h2>
+                <div class="features-grid">
+                    <div class="feature-item">
+                        <div class="feature-icon">✅</div>
+                        <h4>Quality Guaranteed</h4>
+                        <p>All products are thoroughly tested and documented</p>
+                    </div>
+                    <div class="feature-item">
+                        <div class="feature-icon">🔄</div>
+                        <h4>Free Updates</h4>
+                        <p>Get free updates and improvements for life</p>
+                    </div>
+                    <div class="feature-item">
+                        <div class="feature-icon">💬</div>
+                        <h4>Support Included</h4>
+                        <p>Direct support from the developer</p>
+                    </div>
+                    <div class="feature-item">
+                        <div class="feature-icon">💰</div>
+                        <h4>Money Back</h4>
+                        <p>30-day money-back guarantee</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+    
+    <div th:replace="~{layout/footer :: footer}"></div>
+    
+    <script th:src="@{/js/main.js}"></script>
+</body>
+</html>

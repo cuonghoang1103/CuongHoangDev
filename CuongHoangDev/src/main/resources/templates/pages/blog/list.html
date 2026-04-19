@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="vi" xmlns:th="http://www.thymeleaf.org"
+      th:replace="layout/master :: master(~{::title}, ~{::content})">
+<head>
+    <title th:text="${title}">Blog</title>
+</head>
+<body>
+    <div th:fragment="content">
+        <!-- Hero Section -->
+        <section class="hero-section gradient-animation">
+            <div class="hero-content">
+                <div class="hero-text">
+                    <div class="logo-animation">
+                        <i class="fas fa-blog"></i>
+                    </div>
+                    <h1 class="hero-title">
+                        <span class="highlight">Blog</span> của tôi
+                    </h1>
+                    <p class="hero-subtitle">
+                        Chia sẻ kiến thức và kinh nghiệm lập trình
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Blog Content -->
+        <section class="content-section">
+            <div class="container">
+                <div class="blog-grid">
+                    <div class="blog-card">
+                        <h3>📝 Lập trình Spring Boot</h3>
+                        <p>Hướng dẫn xây dựng ứng dụng web với Spring Boot</p>
+                    </div>
+                    <div class="blog-card">
+                        <h3>🎨 Frontend Development</h3>
+                        <p>Các kỹ thuật thiết kế giao diện hiện đại</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+</body>
+</html>

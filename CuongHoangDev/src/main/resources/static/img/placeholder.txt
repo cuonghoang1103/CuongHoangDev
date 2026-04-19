@@ -1,0 +1,5 @@
+# Placeholder file
+# Add your images here:
+# - avatar.jpg (avatar image)
+# - favicon.ico (website icon)
+# - other images for your website 

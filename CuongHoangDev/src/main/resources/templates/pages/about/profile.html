@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="vi" xmlns:th="http://www.thymeleaf.org"
+      th:replace="layout/master :: master(~{::title}, ~{::content})">
+<head>
+    <title th:text="${title}">Giới thiệu</title>
+</head>
+<body>
+    <div th:fragment="content">
+        <!-- Hero Section -->
+        <section class="hero-section gradient-animation">
+            <div class="hero-content">
+                <div class="hero-text">
+                    <div class="logo-animation">
+                        <i class="fas fa-user-circle"></i>
+                    </div>
+                    <h1 class="hero-title">
+                        Giới thiệu về <span class="highlight">Cuong Thai</span>
+                    </h1>
+                    <p class="hero-subtitle">
+                        Full-stack Developer với đam mê tạo ra những trải nghiệm số tuyệt vời
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <!-- About Content -->
+        <section class="content-section">
+            <div class="container">
+                <div class="about-grid">
+                    <div class="about-text">
+                        <h2>Về tôi</h2>
+                        <p>Tôi là một Full-stack Developer với kinh nghiệm trong việc phát triển ứng dụng web hiện đại.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+</body>
+</html>

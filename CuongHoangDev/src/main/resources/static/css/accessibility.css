@@ -1,0 +1,271 @@
+/* ===== ACCESSIBILITY IMPROVEMENTS ===== */
+
+/* Screen reader only content */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* Skip to main content link */
+.skip-link {
+  position: absolute;
+  top: -40px;
+  left: 6px;
+  background: var(--primary);
+  color: var(--white);
+  padding: 8px;
+  text-decoration: none;
+  border-radius: 4px;
+  z-index: 1000;
+  transition: top 0.3s;
+}
+
+.skip-link:focus {
+  top: 6px;
+}
+
+/* Focus indicators */
+*:focus {
+  outline: 2px solid var(--primary);
+  outline-offset: 2px;
+}
+
+/* Better focus for interactive elements */
+.btn:focus, .form-input:focus, .nav-link:focus {
+  outline: 2px solid var(--primary);
+  outline-offset: 2px;
+  box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.1);
+}
+
+/* High contrast mode support */
+@media (prefers-contrast: high) {
+  .card {
+    border: 2px solid var(--gray-300);
+  }
+  
+  .btn {
+    border: 2px solid currentColor;
+  }
+  
+  .text-gradient {
+    background: none;
+    color: var(--primary);
+  }
+}
+
+/* Dark mode accessibility */
+@media (prefers-color-scheme: dark) {
+  :root {
+    --text-primary: #f8fafc;
+    --text-secondary: #cbd5e1;
+    --bg-primary: #0f172a;
+    --bg-secondary: #1e293b;
+  }
+}
+
+/* Reduced motion preferences */
+@media (prefers-reduced-motion: reduce) {
+  .gradient-animation::before {
+    animation: none;
+  }
+  
+  .float, .pulse, .typing-text {
+    animation: none;
+  }
+  
+  .animate-on-scroll {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+/* Better color contrast */
+.text-muted {
+  color: var(--gray-600);
+  font-weight: 500; /* Increase weight for better readability */
+}
+
+/* Accessible form labels */
+.form-label {
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+  color: var(--text-primary);
+}
+
+/* Error states */
+.form-input:invalid {
+  border-color: var(--red-500);
+  box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.1);
+}
+
+.form-error {
+  color: var(--red-600);
+  font-size: var(--text-sm);
+  margin-top: 0.25rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+/* Success states */
+.form-input:valid {
+  border-color: var(--green-500);
+}
+
+.form-success {
+  color: var(--green-600);
+  font-size: var(--text-sm);
+  margin-top: 0.25rem;
+}
+
+/* Better button accessibility */
+.btn[disabled] {
+  opacity: 0.6;
+  cursor: not-allowed;
+  pointer-events: none;
+}
+
+.btn[aria-pressed="true"] {
+  background-color: var(--primary-dark);
+  box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+/* Loading states */
+.btn.loading {
+  position: relative;
+  color: transparent;
+}
+
+.btn.loading::after {
+  content: '';
+  position: absolute;
+  width: 16px;
+  height: 16px;
+  top: 50%;
+  left: 50%;
+  margin-left: -8px;
+  margin-top: -8px;
+  border: 2px solid transparent;
+  border-top-color: currentColor;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* Better link accessibility */
+a:not(.btn) {
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 2px;
+}
+
+a:not(.btn):hover {
+  text-decoration-thickness: 2px;
+}
+
+/* Accessible tables */
+.table th {
+  font-weight: 600;
+  text-align: left;
+}
+
+.table td, .table th {
+  padding: 0.75rem;
+  border-bottom: 1px solid var(--gray-200);
+}
+
+/* Better mobile touch targets */
+@media (max-width: 768px) {
+  .btn, .nav-link, .form-input {
+    min-height: 44px; /* Minimum touch target size */
+  }
+}
+
+/* Accessible modals */
+.modal[aria-hidden="true"] {
+  display: none;
+}
+
+.modal-backdrop {
+  background: rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(4px);
+}
+
+/* Focus trap for modals */
+.modal:focus {
+  outline: none;
+}
+
+/* Accessible notifications */
+.notification {
+  role: alert;
+  aria-live: polite;
+}
+
+.notification.urgent {
+  aria-live: assertive;
+}
+
+/* Better heading hierarchy */
+h1, h2, h3, h4, h5, h6 {
+  line-height: 1.2;
+  margin-bottom: 0.5em;
+}
+
+/* Accessible icons */
+.icon[aria-hidden="true"] {
+  pointer-events: none;
+}
+
+/* Better list accessibility */
+.list-unstyled {
+  list-style: none;
+  padding-left: 0;
+}
+
+/* Accessible progress indicators */
+.progress {
+  background: var(--gray-200);
+  border-radius: 9999px;
+  overflow: hidden;
+}
+
+.progress-bar {
+  background: var(--primary);
+  height: 100%;
+  transition: width 0.3s ease;
+}
+
+/* Print styles */
+@media print {
+  .no-print {
+    display: none !important;
+  }
+  
+  .btn {
+    border: 1px solid #000;
+    background: transparent !important;
+    color: #000 !important;
+  }
+  
+  a {
+    text-decoration: underline;
+  }
+  
+  .card {
+    border: 1px solid #000;
+    box-shadow: none;
+  }
+}

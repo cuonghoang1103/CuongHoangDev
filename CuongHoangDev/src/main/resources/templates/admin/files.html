@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>File Management - Admin</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+    <link rel="stylesheet" th:href="@{/css/pages/admin.css}">
+</head>
+<body>
+    <div th:replace="~{layout/admin-layout :: admin-layout}">
+        <main class="admin-content">
+            <div class="admin-header">
+                <h1>File Management</h1>
+                <div class="admin-actions">
+                    <button class="btn btn-primary" onclick="location.href='/admin/files/upload'">Upload Files</button>
+                </div>
+            </div>
+            
+            <div class="file-stats">
+                <div class="stat-card">
+                    <h3>Total Files</h3>
+                    <div class="stat-number">156</div>
+                </div>
+                <div class="stat-card">
+                    <h3>Images</h3>
+                    <div class="stat-number">89</div>
+                </div>
+                <div class="stat-card">
+                    <h3>Documents</h3>
+                    <div class="stat-number">45</div>
+                </div>
+                <div class="stat-card">
+                    <h3>Storage Used</h3>
+                    <div class="stat-number">2.3 GB</div>
+                </div>
+            </div>
+            
+            <div class="file-filters">
+                <button class="filter-btn active" data-filter="all">All Files</button>
+                <button class="filter-btn" data-filter="images">Images</button>
+                <button class="filter-btn" data-filter="documents">Documents</button>
+                <button class="filter-btn" data-filter="videos">Videos</button>
+            </div>
+            
+            <div class="files-grid">
+                <div class="file-item" data-type="image">
+                    <div class="file-thumbnail">
+                        <img src="/img/sample.jpg" alt="Sample Image">
+                    </div>
+                    <div class="file-info">
+                        <div class="file-name">sample-image.jpg</div>
+                        <div class="file-size">2.5 MB</div>
+                        <div class="file-date">2024-03-15</div>
+                    </div>
+                    <div class="file-actions">
+                        <button class="btn-view">View</button>
+                        <button class="btn-download">Download</button>
+                        <button class="btn-delete">Delete</button>
+                    </div>
+                </div>
+                
+                <div class="file-item" data-type="document">
+                    <div class="file-thumbnail">
+                        <div class="file-icon">PDF</div>
+                    </div>
+                    <div class="file-info">
+                        <div class="file-name">document.pdf</div>
+                        <div class="file-size">1.2 MB</div>
+                        <div class="file-date">2024-03-14</div>
+                    </div>
+                    <div class="file-actions">
+                        <button class="btn-view">View</button>
+                        <button class="btn-download">Download</button>
+                        <button class="btn-delete">Delete</button>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+    
+    <script th:src="@{/js/main.js}"></script>
+    <script th:src="@{/js/pages/admin.js}"></script>
+</body>
+</html>

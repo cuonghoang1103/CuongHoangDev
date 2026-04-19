@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title th:text="${pageTitle} + ' - CuongHoang Dev'">My CV - CuongHoang Dev</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+    <link rel="stylesheet" th:href="@{/css/pages/about.css}">
+</head>
+<body>
+    <div th:replace="~{layout/header :: header}"></div>
+    
+    <main class="cv-page">
+        <div class="container">
+            <h1>My Curriculum Vitae</h1>
+            <div class="cv-content">
+                <section class="cv-section">
+                    <h2>Personal Information</h2>
+                    <div class="cv-info">
+                        <!-- CV content will be added here -->
+                        <p>CV content coming soon...</p>
+                    </div>
+                </section>
+                
+                <section class="cv-section">
+                    <h2>Education</h2>
+                    <div class="cv-info">
+                        <!-- Education content will be added here -->
+                        <p>Education details coming soon...</p>
+                    </div>
+                </section>
+                
+                <section class="cv-section">
+                    <h2>Experience</h2>
+                    <div class="cv-info">
+                        <!-- Experience content will be added here -->
+                        <p>Experience details coming soon...</p>
+                    </div>
+                </section>
+                
+                <section class="cv-section">
+                    <h2>Skills</h2>
+                    <div class="cv-info">
+                        <!-- Skills content will be added here -->
+                        <p>Skills details coming soon...</p>
+                    </div>
+                </section>
+            </div>
+        </div>
+    </main>
+    
+    <div th:replace="~{layout/footer :: footer}"></div>
+    
+    <script th:src="@{/js/main.js}"></script>
+</body>
+</html>

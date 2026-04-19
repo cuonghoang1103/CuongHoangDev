@@ -1,0 +1,107 @@
+# ===================================
+# TEST PROFILE CONFIGURATION
+# ===================================
+
+spring:
+  application:
+    name: CuongHoangDev-Test
+  
+  # ===== DATABASE CONFIGURATION =====
+  datasource:
+    url: jdbc:h2:mem:testdb
+    driver-class-name: org.h2.Driver
+    username: sa
+    password: 
+  
+  h2:
+    console:
+      enabled: false
+  
+  jpa:
+    hibernate:
+      ddl-auto: create-drop
+    show-sql: false
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.H2Dialect
+        format_sql: false
+  
+  sql:
+    init:
+      mode: never
+  
+  # ===== SECURITY CONFIGURATION =====
+  security:
+    oauth2:
+      client:
+        registration:
+          google:
+            client-id: test-google-client-id
+            client-secret: test-google-client-secret
+            scope:
+              - email
+              - profile
+          github:
+            client-id: test-github-client-id
+            client-secret: test-github-client-secret
+            scope:
+              - user:email
+              - read:user
+
+# ===== SERVER CONFIGURATION =====
+server:
+  port: 0 # Random port for tests
+
+# ===== LOGGING CONFIGURATION =====
+logging:
+  level:
+    dev.cuonghoang: WARN
+    org.springframework.security: WARN
+    org.springframework.web: WARN
+    org.hibernate.SQL: WARN
+    org.hibernate.type.descriptor.sql.BasicBinder: WARN
+
+# ===== CUSTOM APPLICATION PROPERTIES =====
+app:
+  name: CuongHoangDev-Test
+  version: 1.0.0-TEST
+  description: Test Configuration for CuongHoangDev
+  
+  # JWT Configuration
+  jwt:
+    secret: test-jwt-secret-key-for-testing-only
+    expiration: 86400000 # 24 hours in milliseconds
+    refresh-expiration: 604800000 # 7 days in milliseconds
+  
+  # File Upload Configuration
+  upload:
+    path: test-uploads/
+    max-size: 10485760 # 10MB in bytes
+    allowed-types: jpg,jpeg,png,gif,pdf,doc,docx,txt,mp3,mp4
+  
+  # Admin Configuration
+  admin:
+    default-username: test-admin
+    default-password: test-admin123
+    default-email: test-admin@cuonghoang.dev
+  
+  # OAuth2 Configuration
+  oauth2:
+    authorizedRedirectUris:
+      - http://localhost:8080/oauth2/redirect
+      - http://localhost:3000/oauth2/redirect
+    success-redirect-url: /?oauth2=success
+    failure-redirect-url: /auth/login?error=oauth2_failed
+  
+  # Cache Configuration
+  cache:
+    enabled: false
+    ttl: 3600 # 1 hour
+  
+  # Email Templates
+  mail:
+    from: test-noreply@cuonghoang.dev
+    templates:
+      welcome: mail-templates/welcome.html
+      password-reset: mail-templates/password-reset.html
+      contact-confirmation: mail-templates/contact-confirmation.html

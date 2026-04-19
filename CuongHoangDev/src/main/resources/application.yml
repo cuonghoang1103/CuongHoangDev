@@ -1,0 +1,213 @@
+# ===================================
+# CUONGHOANGDEV APPLICATION CONFIG
+# ===================================
+
+spring:
+  application:
+    name: CuongHoangDev
+  
+  # ===== PROFILES =====
+  profiles:
+    active: dev
+  
+  # ===== DATABASE CONFIGURATION =====
+  datasource:
+    url: jdbc:h2:mem:cuonghoangdev
+    driver-class-name: org.h2.Driver
+    username: sa
+    password: 
+  
+  h2:
+    console:
+      enabled: true
+      path: /h2-console
+      settings:
+        web-allow-others: true
+  
+  jpa:
+    hibernate:
+      ddl-auto: create-drop
+    show-sql: true
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.H2Dialect
+        format_sql: true
+    defer-datasource-initialization: true
+  
+  sql:
+    init:
+      mode: never
+  
+  # ===== WEB CONFIGURATION =====
+  web:
+    resources:
+      static-locations: classpath:/static/
+      cache-period: 3600
+  
+  mvc:
+    static-path-pattern: /static/**
+    view:
+      prefix: /templates/
+      suffix: .html
+  
+  # ===== THYMELEAF CONFIGURATION =====
+  thymeleaf:
+    cache: false
+    encoding: UTF-8
+    mode: HTML
+    prefix: classpath:/templates/
+    suffix: .html
+    servlet:
+      content-type: text/html
+  
+  # ===== SECURITY CONFIGURATION =====
+  security:
+    oauth2:
+      client:
+        registration:
+          google:
+            client-id: ${GOOGLE_CLIENT_ID:your-google-client-id}
+            client-secret: ${GOOGLE_CLIENT_SECRET:your-google-client-secret}
+            scope:
+              - email
+              - profile
+          github:
+            client-id: ${GITHUB_CLIENT_ID:your-github-client-id}
+            client-secret: ${GITHUB_CLIENT_SECRET:your-github-client-secret}
+            scope:
+              - user:email
+              - read:user
+  
+  # ===== MAIL CONFIGURATION =====
+  mail:
+    host: smtp.gmail.com
+    port: 587
+    username: ${MAIL_USERNAME:your-email@gmail.com}
+    password: ${MAIL_PASSWORD:your-app-password}
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true
+            required: true
+          ssl:
+            trust: smtp.gmail.com
+  
+  # ===== FILE UPLOAD CONFIGURATION =====
+  servlet:
+    multipart:
+      enabled: true
+      max-file-size: 10MB
+      max-request-size: 10MB
+      file-size-threshold: 2KB
+  
+  # ===== INTERNATIONALIZATION =====
+  messages:
+    basename: i18n/messages
+    encoding: UTF-8
+    cache-duration: 3600
+  
+  # ===== DEVTOOLS =====
+  devtools:
+    restart:
+      enabled: true
+    livereload:
+      enabled: true
+
+# ===== SERVER CONFIGURATION =====
+server:
+  port: 8080
+  servlet:
+    context-path: /
+    encoding:
+      charset: UTF-8
+      enabled: true
+      force: true
+  error:
+    whitelabel:
+      enabled: false
+    path: /error
+
+# ===== LOGGING CONFIGURATION =====
+logging:
+  level:
+    dev.cuonghoang: DEBUG
+    org.springframework.security: DEBUG
+    org.springframework.web: DEBUG
+    org.hibernate.SQL: DEBUG
+    org.hibernate.type.descriptor.sql.BasicBinder: TRACE
+  pattern:
+    console: "%d{yyyy-MM-dd HH:mm:ss} - %msg%n"
+    file: "%d{yyyy-MM-dd HH:mm:ss} [%thread] %-5level %logger{36} - %msg%n"
+  file:
+    name: logs/cuonghoangdev.log
+
+# ===== CUSTOM APPLICATION PROPERTIES =====
+app:
+  name: CuongHoangDev
+  version: 1.0.0
+  description: Professional Portfolio Website by Cuong Hoang
+  
+  # JWT Configuration
+  jwt:
+    secret: ${JWT_SECRET:cuonghoangdev-jwt-secret-key-2024-very-long-and-secure}
+    expiration: 86400000 # 24 hours in milliseconds
+    refresh-expiration: 604800000 # 7 days in milliseconds
+  
+  # File Upload Configuration
+  upload:
+    path: ${UPLOAD_PATH:uploads/}
+    max-size: 10485760 # 10MB in bytes
+    allowed-types: jpg,jpeg,png,gif,pdf,doc,docx,txt,mp3,mp4
+  
+  # Admin Configuration
+  admin:
+    default-username: admin
+    default-password: ${ADMIN_PASSWORD:admin123}
+    default-email: admin@cuonghoang.dev
+  
+  # OAuth2 Configuration
+  oauth2:
+    authorizedRedirectUris:
+      - http://localhost:8080/oauth2/redirect
+      - http://localhost:3000/oauth2/redirect
+    success-redirect-url: /?oauth2=success
+    failure-redirect-url: /auth/login?error=oauth2_failed
+  
+  # Cache Configuration
+  cache:
+    enabled: true
+    ttl: 3600 # 1 hour
+  
+  # Email Templates
+  mail:
+    from: ${MAIL_FROM:noreply@cuonghoang.dev}
+    templates:
+      welcome: mail-templates/welcome.html
+      password-reset: mail-templates/password-reset.html
+      contact-confirmation: mail-templates/contact-confirmation.html
+
+# ===== MANAGEMENT & ACTUATOR =====
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info,metrics
+  endpoint:
+    health:
+      show-details: when-authorized
+  info:
+    env:
+      enabled: true
+
+# ===== INFO =====
+info:
+  app:
+    name: ${app.name}
+    version: ${app.version}
+    description: ${app.description}
+  java:
+    version: ${java.version}
+  spring:
+    version: ${spring-boot.version}

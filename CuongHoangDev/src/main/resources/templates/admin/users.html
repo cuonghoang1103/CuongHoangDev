@@ -1,0 +1,806 @@
+<!DOCTYPE html>
+<html lang="vi" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Management - CuongThai Admin</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        :root {
+            --primary-color: #667eea;
+            --secondary-color: #764ba2;
+            --success-color: #10b981;
+            --warning-color: #f59e0b;
+            --danger-color: #ef4444;
+            --info-color: #06b6d4;
+            --dark-color: #1f2937;
+            --light-color: #f8fafc;
+            --border-color: #e5e7eb;
+            --text-primary: #111827;
+            --text-secondary: #6b7280;
+            --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+            --radius: 0.5rem;
+            --radius-lg: 1rem;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            color: var(--text-primary);
+        }
+
+        .admin-container {
+            display: flex;
+            min-height: 100vh;
+        }
+
+        /* Sidebar */
+        .admin-sidebar {
+            width: 280px;
+            background: white;
+            box-shadow: var(--shadow-lg);
+            position: fixed;
+            height: 100vh;
+            overflow-y: auto;
+            z-index: 1000;
+        }
+
+        .sidebar-header {
+            padding: 2rem;
+            border-bottom: 1px solid var(--border-color);
+            text-align: center;
+        }
+
+        .sidebar-logo {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--primary-color);
+        }
+
+        .sidebar-nav {
+            padding: 1rem 0;
+        }
+
+        .nav-item {
+            margin: 0.5rem 1rem;
+        }
+
+        .nav-link {
+            display: flex;
+            align-items: center;
+            padding: 1rem;
+            color: var(--text-secondary);
+            text-decoration: none;
+            border-radius: var(--radius);
+            transition: all 0.3s ease;
+        }
+
+        .nav-link:hover,
+        .nav-link.active {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            transform: translateX(5px);
+        }
+
+        .nav-link i {
+            margin-right: 0.75rem;
+            width: 20px;
+        }
+
+        /* Main Content */
+        .admin-main {
+            flex: 1;
+            margin-left: 280px;
+            padding: 2rem;
+        }
+
+        .page-header {
+            background: white;
+            border-radius: var(--radius-lg);
+            padding: 2rem;
+            margin-bottom: 2rem;
+            box-shadow: var(--shadow);
+        }
+
+        .page-title {
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--text-primary);
+            margin-bottom: 0.5rem;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .page-subtitle {
+            color: var(--text-secondary);
+            font-size: 1.1rem;
+        }
+
+        /* User Management Specific Styles */
+        .user-controls {
+            background: white;
+            border-radius: var(--radius-lg);
+            padding: 1.5rem;
+            margin-bottom: 2rem;
+            box-shadow: var(--shadow);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        .search-filters {
+            display: flex;
+            gap: 1rem;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        .search-box {
+            position: relative;
+        }
+
+        .search-input {
+            padding: 0.75rem 1rem 0.75rem 3rem;
+            border: 2px solid var(--border-color);
+            border-radius: var(--radius);
+            font-size: 1rem;
+            width: 300px;
+            transition: border-color 0.3s ease;
+        }
+
+        .search-input:focus {
+            outline: none;
+            border-color: var(--primary-color);
+        }
+
+        .search-icon {
+            position: absolute;
+            left: 1rem;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--text-secondary);
+        }
+
+        .filter-select {
+            padding: 0.75rem 1rem;
+            border: 2px solid var(--border-color);
+            border-radius: var(--radius);
+            font-size: 1rem;
+            background: white;
+            cursor: pointer;
+        }
+
+        .btn {
+            padding: 0.75rem 1.5rem;
+            border: none;
+            border-radius: var(--radius);
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .btn-success {
+            background: var(--success-color);
+            color: white;
+        }
+
+        .btn-warning {
+            background: var(--warning-color);
+            color: white;
+        }
+
+        .btn-danger {
+            background: var(--danger-color);
+            color: white;
+        }
+
+        .btn-outline {
+            background: transparent;
+            border: 2px solid var(--primary-color);
+            color: var(--primary-color);
+        }
+
+        .btn-outline:hover {
+            background: var(--primary-color);
+            color: white;
+        }
+
+        /* User Table */
+        .users-table-container {
+            background: white;
+            border-radius: var(--radius-lg);
+            box-shadow: var(--shadow);
+            overflow: hidden;
+        }
+
+        .table-header {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            padding: 1.5rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .table-title {
+            font-size: 1.25rem;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .bulk-actions {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .users-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .users-table th,
+        .users-table td {
+            padding: 1rem;
+            text-align: left;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .users-table th {
+            background: var(--light-color);
+            font-weight: 600;
+            color: var(--text-primary);
+        }
+
+        .users-table tbody tr:hover {
+            background: #f8fafc;
+        }
+
+        .user-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: 600;
+            margin-right: 1rem;
+        }
+
+        .user-info {
+            display: flex;
+            align-items: center;
+        }
+
+        .user-details h4 {
+            margin: 0;
+            color: var(--text-primary);
+        }
+
+        .user-details p {
+            margin: 0;
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+        }
+
+        .status-badge {
+            padding: 0.25rem 0.75rem;
+            border-radius: 9999px;
+            font-size: 0.8rem;
+            font-weight: 600;
+        }
+
+        .status-active {
+            background: #dcfce7;
+            color: #166534;
+        }
+
+        .status-inactive {
+            background: #fef2f2;
+            color: #dc2626;
+        }
+
+        .role-badge {
+            padding: 0.25rem 0.75rem;
+            border-radius: var(--radius);
+            font-size: 0.8rem;
+            font-weight: 600;
+        }
+
+        .role-admin {
+            background: #fef3c7;
+            color: #92400e;
+        }
+
+        .role-user {
+            background: #dbeafe;
+            color: #1e40af;
+        }
+
+        .action-buttons {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .action-btn {
+            padding: 0.5rem;
+            border: none;
+            border-radius: var(--radius);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            width: 35px;
+            height: 35px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .action-btn:hover {
+            transform: translateY(-2px);
+        }
+
+        .action-edit {
+            background: var(--info-color);
+            color: white;
+        }
+
+        .action-delete {
+            background: var(--danger-color);
+            color: white;
+        }
+
+        .action-view {
+            background: var(--success-color);
+            color: white;
+        }
+
+        /* Responsive */
+        @media (max-width: 1024px) {
+            .admin-sidebar {
+                transform: translateX(-100%);
+                transition: transform 0.3s ease;
+            }
+
+            .admin-sidebar.open {
+                transform: translateX(0);
+            }
+
+            .admin-main {
+                margin-left: 0;
+            }
+
+            .search-input {
+                width: 200px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .user-controls {
+                flex-direction: column;
+                align-items: stretch;
+            }
+
+            .search-filters {
+                justify-content: center;
+            }
+
+            .users-table {
+                font-size: 0.9rem;
+            }
+
+            .users-table th,
+            .users-table td {
+                padding: 0.75rem 0.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="admin-container">
+        <!-- Sidebar -->
+        <aside class="admin-sidebar">
+            <div class="sidebar-header">
+                <div class="sidebar-logo">
+                    <i class="fas fa-user-shield"></i>
+                    CuongThai Admin
+                </div>
+            </div>
+            <nav class="sidebar-nav">
+                <div class="nav-item">
+                    <a href="/admin/dashboard" class="nav-link">
+                        <i class="fas fa-tachometer-alt"></i>
+                        Dashboard
+                    </a>
+                </div>
+                <div class="nav-item">
+                    <a href="/admin/users" class="nav-link active">
+                        <i class="fas fa-users"></i>
+                        User Management
+                    </a>
+                </div>
+                <div class="nav-item">
+                    <a href="/admin/music" class="nav-link">
+                        <i class="fas fa-music"></i>
+                        Music Management
+                    </a>
+                </div>
+                <div class="nav-item">
+                    <a href="/admin/documents" class="nav-link">
+                        <i class="fas fa-folder"></i>
+                        Document Management
+                    </a>
+                </div>
+                <div class="nav-item">
+                    <a href="/admin/settings" class="nav-link">
+                        <i class="fas fa-cog"></i>
+                        Settings
+                    </a>
+                </div>
+                <div class="nav-item">
+                    <a href="/logout" class="nav-link">
+                        <i class="fas fa-sign-out-alt"></i>
+                        Logout
+                    </a>
+                </div>
+            </nav>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="admin-main">
+            <!-- Page Header -->
+            <div class="page-header">
+                <h1 class="page-title">
+                    <i class="fas fa-users"></i>
+                    User Management
+                </h1>
+                <p class="page-subtitle">
+                    Quản lý users, roles và permissions trong hệ thống
+                </p>
+            </div>
+
+            <!-- User Controls -->
+            <div class="user-controls">
+                <div class="search-filters">
+                    <div class="search-box">
+                        <i class="fas fa-search search-icon"></i>
+                        <input type="text" class="search-input" placeholder="Tìm kiếm users..." id="userSearch">
+                    </div>
+                    <select class="filter-select" id="roleFilter">
+                        <option value="">Tất cả roles</option>
+                        <option value="ADMIN">Admin</option>
+                        <option value="USER">User</option>
+                        <option value="MODERATOR">Moderator</option>
+                    </select>
+                    <select class="filter-select" id="statusFilter">
+                        <option value="">Tất cả trạng thái</option>
+                        <option value="active">Active</option>
+                        <option value="inactive">Inactive</option>
+                    </select>
+                </div>
+                <div class="action-buttons">
+                    <button class="btn btn-primary" onclick="openAddUserModal()">
+                        <i class="fas fa-user-plus"></i>
+                        Thêm User
+                    </button>
+                    <button class="btn btn-success" onclick="exportUsers()">
+                        <i class="fas fa-download"></i>
+                        Export
+                    </button>
+                    <button class="btn btn-outline" onclick="refreshUsers()">
+                        <i class="fas fa-sync-alt"></i>
+                        Refresh
+                    </button>
+                </div>
+            </div>
+
+            <!-- Users Table -->
+            <div class="users-table-container">
+                <div class="table-header">
+                    <div class="table-title">
+                        <i class="fas fa-list"></i>
+                        Danh sách Users (<span id="userCount">0</span>)
+                    </div>
+                    <div class="bulk-actions">
+                        <button class="btn btn-warning" onclick="bulkAction('activate')" style="display: none;" id="bulkActivate">
+                            <i class="fas fa-check"></i>
+                            Activate Selected
+                        </button>
+                        <button class="btn btn-danger" onclick="bulkAction('deactivate')" style="display: none;" id="bulkDeactivate">
+                            <i class="fas fa-ban"></i>
+                            Deactivate Selected
+                        </button>
+                    </div>
+                </div>
+
+                <table class="users-table">
+                    <thead>
+                        <tr>
+                            <th>
+                                <input type="checkbox" id="selectAll" onchange="toggleSelectAll()">
+                            </th>
+                            <th>User</th>
+                            <th>Email</th>
+                            <th>Role</th>
+                            <th>Status</th>
+                            <th>Ngày tạo</th>
+                            <th>Hoạt động cuối</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody id="usersTableBody">
+                        <!-- Sample Users - Replace with Thymeleaf data -->
+                        <tr>
+                            <td><input type="checkbox" class="user-checkbox" value="1"></td>
+                            <td>
+                                <div class="user-info">
+                                    <div class="user-avatar">CT</div>
+                                    <div class="user-details">
+                                        <h4>Cuong Thai</h4>
+                                        <p>@cuongthai</p>
+                                    </div>
+                                </div>
+                            </td>
+                            <td>cuongthaihnhe176322@gmail.com</td>
+                            <td><span class="role-badge role-admin">ADMIN</span></td>
+                            <td><span class="status-badge status-active">Active</span></td>
+                            <td>2024-01-15</td>
+                            <td>2 phút trước</td>
+                            <td>
+                                <div class="action-buttons">
+                                    <button class="action-btn action-view" onclick="viewUser(1)" title="View">
+                                        <i class="fas fa-eye"></i>
+                                    </button>
+                                    <button class="action-btn action-edit" onclick="editUser(1)" title="Edit">
+                                        <i class="fas fa-edit"></i>
+                                    </button>
+                                    <button class="action-btn action-delete" onclick="deleteUser(1)" title="Delete">
+                                        <i class="fas fa-trash"></i>
+                                    </button>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><input type="checkbox" class="user-checkbox" value="2"></td>
+                            <td>
+                                <div class="user-info">
+                                    <div class="user-avatar">JD</div>
+                                    <div class="user-details">
+                                        <h4>John Doe</h4>
+                                        <p>@johndoe</p>
+                                    </div>
+                                </div>
+                            </td>
+                            <td>john.doe@example.com</td>
+                            <td><span class="role-badge role-user">USER</span></td>
+                            <td><span class="status-badge status-active">Active</span></td>
+                            <td>2024-02-10</td>
+                            <td>1 giờ trước</td>
+                            <td>
+                                <div class="action-buttons">
+                                    <button class="action-btn action-view" onclick="viewUser(2)" title="View">
+                                        <i class="fas fa-eye"></i>
+                                    </button>
+                                    <button class="action-btn action-edit" onclick="editUser(2)" title="Edit">
+                                        <i class="fas fa-edit"></i>
+                                    </button>
+                                    <button class="action-btn action-delete" onclick="deleteUser(2)" title="Delete">
+                                        <i class="fas fa-trash"></i>
+                                    </button>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><input type="checkbox" class="user-checkbox" value="3"></td>
+                            <td>
+                                <div class="user-info">
+                                    <div class="user-avatar">JS</div>
+                                    <div class="user-details">
+                                        <h4>Jane Smith</h4>
+                                        <p>@janesmith</p>
+                                    </div>
+                                </div>
+                            </td>
+                            <td>jane.smith@example.com</td>
+                            <td><span class="role-badge role-user">USER</span></td>
+                            <td><span class="status-badge status-inactive">Inactive</span></td>
+                            <td>2024-01-20</td>
+                            <td>3 ngày trước</td>
+                            <td>
+                                <div class="action-buttons">
+                                    <button class="action-btn action-view" onclick="viewUser(3)" title="View">
+                                        <i class="fas fa-eye"></i>
+                                    </button>
+                                    <button class="action-btn action-edit" onclick="editUser(3)" title="Edit">
+                                        <i class="fas fa-edit"></i>
+                                    </button>
+                                    <button class="action-btn action-delete" onclick="deleteUser(3)" title="Delete">
+                                        <i class="fas fa-trash"></i>
+                                    </button>
+                                </div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- Pagination -->
+            <div class="pagination-container" style="background: white; border-radius: var(--radius-lg); padding: 1.5rem; margin-top: 2rem; box-shadow: var(--shadow); display: flex; justify-content: between; align-items: center;">
+                <div class="pagination-info">
+                    Hiển thị <strong>1-10</strong> của <strong>25</strong> users
+                </div>
+                <div class="pagination-controls" style="display: flex; gap: 0.5rem;">
+                    <button class="btn btn-outline" onclick="previousPage()">
+                        <i class="fas fa-chevron-left"></i>
+                        Previous
+                    </button>
+                    <button class="btn btn-primary">1</button>
+                    <button class="btn btn-outline">2</button>
+                    <button class="btn btn-outline">3</button>
+                    <button class="btn btn-outline" onclick="nextPage()">
+                        Next
+                        <i class="fas fa-chevron-right"></i>
+                    </button>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script>
+        // User Management JavaScript
+        let selectedUsers = [];
+
+        // Search functionality
+        document.getElementById('userSearch').addEventListener('input', function(e) {
+            const searchTerm = e.target.value.toLowerCase();
+            filterUsers();
+        });
+
+        // Filter functionality
+        document.getElementById('roleFilter').addEventListener('change', filterUsers);
+        document.getElementById('statusFilter').addEventListener('change', filterUsers);
+
+        function filterUsers() {
+            const searchTerm = document.getElementById('userSearch').value.toLowerCase();
+            const roleFilter = document.getElementById('roleFilter').value;
+            const statusFilter = document.getElementById('statusFilter').value;
+
+            const rows = document.querySelectorAll('#usersTableBody tr');
+            let visibleCount = 0;
+
+            rows.forEach(row => {
+                const userName = row.querySelector('.user-details h4').textContent.toLowerCase();
+                const userEmail = row.cells[2].textContent.toLowerCase();
+                const userRole = row.querySelector('.role-badge').textContent;
+                const userStatus = row.querySelector('.status-badge').textContent.toLowerCase();
+
+                const matchesSearch = userName.includes(searchTerm) || userEmail.includes(searchTerm);
+                const matchesRole = !roleFilter || userRole === roleFilter;
+                const matchesStatus = !statusFilter || userStatus.includes(statusFilter);
+
+                if (matchesSearch && matchesRole && matchesStatus) {
+                    row.style.display = '';
+                    visibleCount++;
+                } else {
+                    row.style.display = 'none';
+                }
+            });
+
+            document.getElementById('userCount').textContent = visibleCount;
+        }
+
+        // Select all functionality
+        function toggleSelectAll() {
+            const selectAll = document.getElementById('selectAll');
+            const checkboxes = document.querySelectorAll('.user-checkbox');
+
+            checkboxes.forEach(checkbox => {
+                checkbox.checked = selectAll.checked;
+            });
+
+            updateSelectedUsers();
+        }
+
+        // Update selected users
+        function updateSelectedUsers() {
+            const checkboxes = document.querySelectorAll('.user-checkbox:checked');
+            selectedUsers = Array.from(checkboxes).map(cb => cb.value);
+
+            const bulkActivate = document.getElementById('bulkActivate');
+            const bulkDeactivate = document.getElementById('bulkDeactivate');
+
+            if (selectedUsers.length > 0) {
+                bulkActivate.style.display = 'inline-flex';
+                bulkDeactivate.style.display = 'inline-flex';
+            } else {
+                bulkActivate.style.display = 'none';
+                bulkDeactivate.style.display = 'none';
+            }
+        }
+
+        // Add event listeners to checkboxes
+        document.addEventListener('change', function(e) {
+            if (e.target.classList.contains('user-checkbox')) {
+                updateSelectedUsers();
+            }
+        });
+
+        // User actions
+        function viewUser(userId) {
+            alert(`View user ${userId} - This will open user details modal`);
+        }
+
+        function editUser(userId) {
+            alert(`Edit user ${userId} - This will open edit user modal`);
+        }
+
+        function deleteUser(userId) {
+            if (confirm('Bạn có chắc chắn muốn xóa user này?')) {
+                alert(`Delete user ${userId} - This will call delete API`);
+            }
+        }
+
+        function openAddUserModal() {
+            alert('Open Add User Modal - This will show add user form');
+        }
+
+        function bulkAction(action) {
+            if (selectedUsers.length === 0) return;
+
+            const actionText = action === 'activate' ? 'kích hoạt' : 'vô hiệu hóa';
+            if (confirm(`Bạn có chắc chắn muốn ${actionText} ${selectedUsers.length} users đã chọn?`)) {
+                alert(`Bulk ${action} users: ${selectedUsers.join(', ')}`);
+            }
+        }
+
+        function exportUsers() {
+            alert('Export users to CSV - This will download user data');
+        }
+
+        function refreshUsers() {
+            location.reload();
+        }
+
+        function previousPage() {
+            alert('Previous page functionality');
+        }
+
+        function nextPage() {
+            alert('Next page functionality');
+        }
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', function() {
+            filterUsers(); // Initial count
+        });
+    </script>
+</body>
+</html>

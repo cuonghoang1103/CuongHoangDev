@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Photo Gallery - CuongHoang Dev</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+    <link rel="stylesheet" th:href="@{/css/pages/explore.css}">
+</head>
+<body>
+    <div th:replace="~{layout/header :: header}"></div>
+    
+    <main class="gallery-page">
+        <div class="container">
+            <h1>Photo Gallery</h1>
+            <p class="page-intro">A collection of moments from my travels, experiences, and daily life.</p>
+            
+            <div class="gallery-filters">
+                <button class="filter-btn active" data-filter="all">All Photos</button>
+                <button class="filter-btn" data-filter="travel">Travel</button>
+                <button class="filter-btn" data-filter="tech">Tech Events</button>
+                <button class="filter-btn" data-filter="nature">Nature</button>
+                <button class="filter-btn" data-filter="food">Food</button>
+                <button class="filter-btn" data-filter="friends">Friends</button>
+            </div>
+            
+            <div class="photo-gallery">
+                <div class="photo-item" data-category="travel">
+                    <img src="/img/explore/travel1.jpg" alt="Travel Photo 1" loading="lazy">
+                    <div class="photo-overlay">
+                        <h3>Ha Long Bay, Vietnam</h3>
+                        <p>Beautiful sunset at the bay</p>
+                        <span class="photo-date">March 2024</span>
+                    </div>
+                </div>
+                
+                <div class="photo-item" data-category="tech">
+                    <img src="/img/explore/tech1.jpg" alt="Tech Event 1" loading="lazy">
+                    <div class="photo-overlay">
+                        <h3>Tech Conference 2024</h3>
+                        <p>Learning about new technologies</p>
+                        <span class="photo-date">February 2024</span>
+                    </div>
+                </div>
+                
+                <div class="photo-item" data-category="nature">
+                    <img src="/img/explore/nature1.jpg" alt="Nature Photo 1" loading="lazy">
+                    <div class="photo-overlay">
+                        <h3>Mountain Hiking</h3>
+                        <p>Weekend adventure in the mountains</p>
+                        <span class="photo-date">January 2024</span>
+                    </div>
+                </div>
+                
+                <div class="photo-item" data-category="food">
+                    <img src="/img/explore/food1.jpg" alt="Food Photo 1" loading="lazy">
+                    <div class="photo-overlay">
+                        <h3>Vietnamese Pho</h3>
+                        <p>Traditional breakfast in Hanoi</p>
+                        <span class="photo-date">March 2024</span>
+                    </div>
+                </div>
+                
+                <div class="photo-item" data-category="friends">
+                    <img src="/img/explore/friends1.jpg" alt="Friends Photo 1" loading="lazy">
+                    <div class="photo-overlay">
+                        <h3>University Friends</h3>
+                        <p>Graduation celebration</p>
+                        <span class="photo-date">December 2023</span>
+                    </div>
+                </div>
+                
+                <div class="photo-item" data-category="travel">
+                    <img src="/img/explore/travel2.jpg" alt="Travel Photo 2" loading="lazy">
+                    <div class="photo-overlay">
+                        <h3>Hoi An Ancient Town</h3>
+                        <p>Exploring the historic streets</p>
+                        <span class="photo-date">February 2024</span>
+                    </div>
+                </div>
+                
+                <div class="photo-item" data-category="tech">
+                    <img src="/img/explore/tech2.jpg" alt="Tech Event 2" loading="lazy">
+                    <div class="photo-overlay">
+                        <h3>Coding Bootcamp</h3>
+                        <p>Teaching Spring Boot to students</p>
+                        <span class="photo-date">January 2024</span>
+                    </div>
+                </div>
+                
+                <div class="photo-item" data-category="nature">
+                    <img src="/img/explore/nature2.jpg" alt="Nature Photo 2" loading="lazy">
+                    <div class="photo-overlay">
+                        <h3>Beach Sunset</h3>
+                        <p>Peaceful evening by the ocean</p>
+                        <span class="photo-date">March 2024</span>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="load-more">
+                <button class="btn btn-secondary">Load More Photos</button>
+            </div>
+        </div>
+    </main>
+    
+    <!-- Photo Modal -->
+    <div class="photo-modal" id="photoModal">
+        <div class="modal-content">
+            <span class="modal-close">&times;</span>
+            <img class="modal-image" id="modalImage" src="" alt="">
+            <div class="modal-info">
+                <h3 id="modalTitle"></h3>
+                <p id="modalDescription"></p>
+                <span id="modalDate"></span>
+            </div>
+            <div class="modal-nav">
+                <button class="nav-btn prev-btn" id="prevBtn">❮</button>
+                <button class="nav-btn next-btn" id="nextBtn">❯</button>
+            </div>
+        </div>
+    </div>
+    
+    <div th:replace="~{layout/footer :: footer}"></div>
+    
+    <script th:src="@{/js/main.js}"></script>
+    <script th:src="@{/js/pages/gallery.js}"></script>
+</body>
+</html>

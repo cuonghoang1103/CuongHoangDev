@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Game Reviews - CuongHoang Dev</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+    <link rel="stylesheet" th:href="@{/css/pages/game.css}">
+</head>
+<body>
+    <div th:replace="~{layout/header :: header}"></div>
+    
+    <main class="game-reviews-page">
+        <div class="container">
+            <h1>Game Reviews</h1>
+            <p class="page-intro">My honest reviews and thoughts on games I've played recently.</p>
+            
+            <div class="reviews-filters">
+                <button class="filter-btn active" data-filter="all">All Reviews</button>
+                <button class="filter-btn" data-filter="action">Action</button>
+                <button class="filter-btn" data-filter="rpg">RPG</button>
+                <button class="filter-btn" data-filter="strategy">Strategy</button>
+                <button class="filter-btn" data-filter="indie">Indie</button>
+            </div>
+            
+            <div class="reviews-grid">
+                <article class="review-card" data-category="action">
+                    <div class="review-image">
+                        <img src="/img/games/cyberpunk2077.jpg" alt="Cyberpunk 2077">
+                        <div class="rating-badge">8.5/10</div>
+                    </div>
+                    <div class="review-content">
+                        <h3>Cyberpunk 2077</h3>
+                        <div class="review-meta">
+                            <span class="genre">Action RPG</span>
+                            <span class="platform">PC</span>
+                            <span class="playtime">120 hours</span>
+                        </div>
+                        <p class="review-excerpt">
+                            After the rocky launch, Cyberpunk 2077 has evolved into an incredible experience. 
+                            The story is compelling, the world is immersive, and the gameplay has been significantly improved.
+                        </p>
+                        <div class="review-pros-cons">
+                            <div class="pros">
+                                <h4>Pros:</h4>
+                                <ul>
+                                    <li>Amazing storytelling</li>
+                                    <li>Beautiful graphics</li>
+                                    <li>Immersive world</li>
+                                </ul>
+                            </div>
+                            <div class="cons">
+                                <h4>Cons:</h4>
+                                <ul>
+                                    <li>Still some bugs</li>
+                                    <li>Performance issues</li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="review-footer">
+                            <span class="review-date">March 15, 2024</span>
+                            <a href="/game/review/cyberpunk2077" class="read-more">Read Full Review</a>
+                        </div>
+                    </div>
+                </article>
+                
+                <article class="review-card" data-category="indie">
+                    <div class="review-image">
+                        <img src="/img/games/hades.jpg" alt="Hades">
+                        <div class="rating-badge">9.5/10</div>
+                    </div>
+                    <div class="review-content">
+                        <h3>Hades</h3>
+                        <div class="review-meta">
+                            <span class="genre">Roguelike</span>
+                            <span class="platform">PC</span>
+                            <span class="playtime">85 hours</span>
+                        </div>
+                        <p class="review-excerpt">
+                            Hades is a masterpiece of game design. Every run feels fresh, the story unfolds beautifully, 
+                            and the combat is incredibly satisfying. This is how you make a roguelike game.
+                        </p>
+                        <div class="review-pros-cons">
+                            <div class="pros">
+                                <h4>Pros:</h4>
+                                <ul>
+                                    <li>Perfect gameplay loop</li>
+                                    <li>Excellent narrative</li>
+                                    <li>Beautiful art style</li>
+                                </ul>
+                            </div>
+                            <div class="cons">
+                                <h4>Cons:</h4>
+                                <ul>
+                                    <li>Can be repetitive</li>
+                                    <li>High difficulty curve</li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="review-footer">
+                            <span class="review-date">March 10, 2024</span>
+                            <a href="/game/review/hades" class="read-more">Read Full Review</a>
+                        </div>
+                    </div>
+                </article>
+                
+                <article class="review-card" data-category="strategy">
+                    <div class="review-image">
+                        <img src="/img/games/civilization6.jpg" alt="Civilization VI">
+                        <div class="rating-badge">8.0/10</div>
+                    </div>
+                    <div class="review-content">
+                        <h3>Civilization VI</h3>
+                        <div class="review-meta">
+                            <span class="genre">Strategy</span>
+                            <span class="platform">PC</span>
+                            <span class="playtime">200+ hours</span>
+                        </div>
+                        <p class="review-excerpt">
+                            Civilization VI continues the legacy of the series with improved graphics and new mechanics. 
+                            The district system adds depth, though some balance issues remain.
+                        </p>
+                        <div class="review-pros-cons">
+                            <div class="pros">
+                                <h4>Pros:</h4>
+                                <ul>
+                                    <li>Deep strategy gameplay</li>
+                                    <li>Great multiplayer</li>
+                                    <li>Lots of content</li>
+                                </ul>
+                            </div>
+                            <div class="cons">
+                                <h4>Cons:</h4>
+                                <ul>
+                                    <li>AI could be better</li>
+                                    <li>Long game sessions</li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="review-footer">
+                            <span class="review-date">March 5, 2024</span>
+                            <a href="/game/review/civilization6" class="read-more">Read Full Review</a>
+                        </div>
+                    </div>
+                </article>
+            </div>
+            
+            <div class="review-stats">
+                <h2>My Gaming Stats</h2>
+                <div class="stats-grid">
+                    <div class="stat-item">
+                        <div class="stat-number">47</div>
+                        <div class="stat-label">Games Reviewed</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-number">8.2</div>
+                        <div class="stat-label">Average Rating</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-number">1,250</div>
+                        <div class="stat-label">Hours Played</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-number">15</div>
+                        <div class="stat-label">Favorite Games</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+    
+    <div th:replace="~{layout/footer :: footer}"></div>
+    
+    <script th:src="@{/js/main.js}"></script>
+    <script th:src="@{/js/pages/game.js}"></script>
+</body>
+</html>

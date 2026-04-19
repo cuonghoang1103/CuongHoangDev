@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shopping Cart - CuongHoang Dev</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+    <link rel="stylesheet" th:href="@{/css/pages/shop.css}">
+</head>
+<body>
+    <div th:replace="~{layout/header :: header}"></div>
+    
+    <main class="cart-page">
+        <div class="container">
+            <h1>Shopping Cart</h1>
+            
+            <div class="cart-content">
+                <div class="cart-items">
+                    <div class="cart-item">
+                        <div class="item-image">
+                            <img src="/img/shop/product1.jpg" alt="Product 1">
+                        </div>
+                        <div class="item-details">
+                            <h3>Spring Boot Complete Course</h3>
+                            <p>Comprehensive Spring Boot development course</p>
+                            <div class="item-meta">
+                                <span class="item-category">Course</span>
+                                <span class="item-format">Digital Download</span>
+                            </div>
+                        </div>
+                        <div class="item-quantity">
+                            <button class="qty-btn minus">-</button>
+                            <input type="number" value="1" min="1" class="qty-input">
+                            <button class="qty-btn plus">+</button>
+                        </div>
+                        <div class="item-price">
+                            <span class="price">$99.00</span>
+                        </div>
+                        <div class="item-actions">
+                            <button class="btn-remove">Remove</button>
+                        </div>
+                    </div>
+                    
+                    <div class="cart-item">
+                        <div class="item-image">
+                            <img src="/img/shop/product2.jpg" alt="Product 2">
+                        </div>
+                        <div class="item-details">
+                            <h3>React Template Pack</h3>
+                            <p>Professional React.js templates collection</p>
+                            <div class="item-meta">
+                                <span class="item-category">Template</span>
+                                <span class="item-format">Source Code</span>
+                            </div>
+                        </div>
+                        <div class="item-quantity">
+                            <button class="qty-btn minus">-</button>
+                            <input type="number" value="1" min="1" class="qty-input">
+                            <button class="qty-btn plus">+</button>
+                        </div>
+                        <div class="item-price">
+                            <span class="price">$49.00</span>
+                        </div>
+                        <div class="item-actions">
+                            <button class="btn-remove">Remove</button>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="cart-summary">
+                    <h3>Order Summary</h3>
+                    
+                    <div class="summary-row">
+                        <span>Subtotal (2 items)</span>
+                        <span>$148.00</span>
+                    </div>
+                    
+                    <div class="summary-row">
+                        <span>Discount</span>
+                        <span class="discount">-$14.80</span>
+                    </div>
+                    
+                    <div class="summary-row">
+                        <span>Tax</span>
+                        <span>$0.00</span>
+                    </div>
+                    
+                    <div class="summary-divider"></div>
+                    
+                    <div class="summary-row total">
+                        <span>Total</span>
+                        <span>$133.20</span>
+                    </div>
+                    
+                    <div class="promo-code">
+                        <input type="text" placeholder="Enter promo code" class="promo-input">
+                        <button class="btn btn-secondary">Apply</button>
+                    </div>
+                    
+                    <div class="checkout-actions">
+                        <button class="btn btn-primary btn-large">Proceed to Checkout</button>
+                        <a href="/shop" class="btn btn-secondary">Continue Shopping</a>
+                    </div>
+                    
+                    <div class="payment-methods">
+                        <h4>We Accept</h4>
+                        <div class="payment-icons">
+                            <img src="/img/icons/visa.png" alt="Visa">
+                            <img src="/img/icons/mastercard.png" alt="Mastercard">
+                            <img src="/img/icons/paypal.png" alt="PayPal">
+                            <img src="/img/icons/stripe.png" alt="Stripe">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="cart-empty" style="display: none;">
+                <div class="empty-cart-icon">🛒</div>
+                <h2>Your cart is empty</h2>
+                <p>Looks like you haven't added any items to your cart yet.</p>
+                <a href="/shop" class="btn btn-primary">Start Shopping</a>
+            </div>
+        </div>
+    </main>
+    
+    <div th:replace="~{layout/footer :: footer}"></div>
+    
+    <script th:src="@{/js/main.js}"></script>
+    <script th:src="@{/js/pages/cart.js}"></script>
+</body>
+</html>

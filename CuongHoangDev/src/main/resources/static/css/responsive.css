@@ -1,0 +1,481 @@
+/* ===== RESPONSIVE DESIGN FOR MOBILE & TABLET ===== */
+
+/* ===== MOBILE FIRST APPROACH ===== */
+/* Base styles are mobile-first, then we enhance for larger screens */
+
+/* ===== TABLET LANDSCAPE (1024px and down) ===== */
+@media (max-width: 1024px) {
+  /* Header adjustments */
+  .header-content {
+    padding: 0 var(--space-4);
+  }
+  
+  .header-nav {
+    gap: var(--space-2);
+  }
+  
+  .nav-link span {
+    font-size: var(--text-sm);
+  }
+  
+  /* Sidebar becomes overlay */
+  .main-sidebar {
+    transform: translateX(-100%);
+    position: fixed;
+    z-index: 999;
+    top: 0;
+    height: 100vh;
+    width: 280px;
+    transition: transform 0.3s ease;
+  }
+  
+  .main-sidebar.open {
+    transform: translateX(0);
+  }
+  
+  /* Content area full width */
+  .content-area {
+    margin-left: 0;
+    width: 100%;
+  }
+
+  /* Full-width sections on tablet */
+  .section-content {
+    padding: 0 var(--space-4);
+  }
+  
+  /* Add mobile menu button */
+  .mobile-menu-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    border: none;
+    background: var(--gray-100);
+    border-radius: var(--radius-md);
+    color: var(--gray-700);
+    cursor: pointer;
+    margin-right: var(--space-3);
+  }
+  
+  .mobile-menu-btn:hover {
+    background: var(--gray-200);
+  }
+}
+
+/* ===== TABLET PORTRAIT (768px and down) ===== */
+@media (max-width: 768px) {
+  /* Header */
+  .header-content {
+    padding: 0 var(--space-3);
+    flex-wrap: wrap;
+  }
+  
+  .header-logo {
+    font-size: var(--text-lg);
+  }
+  
+  .header-nav {
+    order: 3;
+    width: 100%;
+    margin-top: var(--space-3);
+    padding-top: var(--space-3);
+    border-top: 1px solid var(--gray-200);
+    justify-content: space-around;
+    overflow-x: auto;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+  }
+  
+  .header-nav::-webkit-scrollbar {
+    display: none;
+  }
+  
+  .nav-link {
+    flex-direction: column;
+    min-width: 60px;
+    text-align: center;
+    padding: var(--space-2);
+  }
+  
+  .nav-link i {
+    margin-bottom: var(--space-1);
+    font-size: var(--text-base);
+  }
+  
+  .nav-link span {
+    font-size: var(--text-xs);
+  }
+  
+  /* Header actions */
+  .header-actions {
+    gap: var(--space-2);
+  }
+  
+  .social-nav {
+    margin-right: var(--space-2);
+  }
+  
+  /* Main content */
+  .main-content {
+    padding: var(--space-4) var(--space-3);
+  }
+
+  /* Full-width sections on mobile */
+  .section-content {
+    padding: 0 var(--space-3);
+  }
+
+  .section {
+    padding: var(--space-12) 0;
+  }
+  
+  /* Cards and grids */
+  .stats-grid,
+  .subjects-grid,
+  .playlist-grid,
+  .documents-grid {
+    grid-template-columns: 1fr;
+    gap: var(--space-4);
+  }
+  
+  /* Forms */
+  .form-group {
+    margin-bottom: var(--space-3);
+  }
+  
+  .btn-group {
+    flex-direction: column;
+    gap: var(--space-2);
+  }
+  
+  /* Tables become cards on mobile */
+  .table-responsive {
+    display: block;
+    width: 100%;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+  
+  /* Hero sections */
+  .hero-title {
+    font-size: var(--text-2xl);
+  }
+  
+  .hero-subtitle {
+    font-size: var(--text-base);
+  }
+}
+
+/* ===== MOBILE LANDSCAPE (640px and down) ===== */
+@media (max-width: 640px) {
+  /* Header becomes more compact */
+  .header-content {
+    padding: 0 var(--space-2);
+  }
+  
+  .header-logo span {
+    display: none;
+  }
+  
+  .header-nav {
+    margin-top: var(--space-2);
+    padding-top: var(--space-2);
+  }
+  
+  /* Social icons smaller */
+  .social-nav {
+    margin-right: var(--space-1);
+    gap: var(--space-1);
+  }
+  
+  .social-link {
+    width: 32px;
+    height: 32px;
+    font-size: var(--text-base);
+  }
+  
+  /* Auth buttons compact */
+  .auth-nav {
+    gap: var(--space-1);
+  }
+  
+  .auth-nav .nav-link,
+  .auth-nav .btn {
+    padding: var(--space-2);
+    font-size: var(--text-sm);
+  }
+  
+  /* Main content */
+  .main-content {
+    padding: var(--space-3) var(--space-2);
+  }
+  
+  /* Typography */
+  .hero-title {
+    font-size: var(--text-xl);
+  }
+  
+  .hero-subtitle {
+    font-size: var(--text-sm);
+  }
+  
+  /* Containers */
+  .playlist-container,
+  .fptu-container,
+  .settings-container,
+  .feedback-container,
+  .documents-container {
+    padding: var(--space-4) var(--space-2);
+  }
+  
+  /* Cards */
+  .playlist-card,
+  .subject-card,
+  .document-card,
+  .settings-card,
+  .feedback-form-card {
+    margin-bottom: var(--space-4);
+  }
+  
+  /* Navigation tabs */
+  .semester-nav,
+  .settings-nav {
+    flex-direction: column;
+    gap: var(--space-2);
+  }
+  
+  .semester-btn,
+  .settings-tab {
+    width: 100%;
+    text-align: center;
+  }
+  
+  /* Music player */
+  .current-song {
+    flex-direction: column;
+    text-align: center;
+    gap: var(--space-2);
+  }
+  
+  .player-controls {
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+  
+  /* Document toolbar */
+  .documents-toolbar {
+    flex-direction: column;
+    align-items: stretch;
+    gap: var(--space-3);
+  }
+  
+  .search-box {
+    min-width: auto;
+  }
+  
+  .filter-buttons {
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+  
+  /* Settings page */
+  .avatar-upload {
+    flex-direction: column;
+    text-align: center;
+    gap: var(--space-3);
+  }
+  
+  /* Feedback page */
+  .feedback-types {
+    grid-template-columns: 1fr;
+  }
+  
+  .feedback-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: var(--space-2);
+  }
+}
+
+/* ===== MOBILE PORTRAIT (480px and down) ===== */
+@media (max-width: 480px) {
+  /* Ultra compact header */
+  .header-content {
+    padding: 0 var(--space-1);
+  }
+  
+  .header-nav {
+    gap: var(--space-1);
+  }
+  
+  .nav-link {
+    min-width: 50px;
+    padding: var(--space-1);
+  }
+  
+  .nav-link span {
+    font-size: 10px;
+  }
+  
+  /* Social icons even smaller */
+  .social-link {
+    width: 28px;
+    height: 28px;
+    font-size: var(--text-sm);
+  }
+  
+  /* Main content */
+  .main-content {
+    padding: var(--space-2) var(--space-1);
+  }
+  
+  /* Hero sections */
+  .playlist-hero,
+  .fptu-hero,
+  .settings-hero,
+  .feedback-hero,
+  .documents-hero {
+    padding: var(--space-8) 0;
+  }
+  
+  .hero-title {
+    font-size: var(--text-lg);
+  }
+  
+  /* Stats grid */
+  .stats-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--space-2);
+  }
+  
+  .stat-card {
+    padding: var(--space-3);
+  }
+  
+  .stat-number {
+    font-size: var(--text-xl);
+  }
+  
+  /* Forms */
+  .form-input,
+  .form-textarea {
+    padding: var(--space-2);
+    font-size: var(--text-sm);
+  }
+  
+  /* Buttons */
+  .btn {
+    padding: var(--space-2) var(--space-3);
+    font-size: var(--text-sm);
+  }
+  
+  /* Modal and overlays */
+  .modal-content {
+    margin: var(--space-2);
+    width: calc(100% - var(--space-4));
+  }
+}
+
+/* ===== TOUCH IMPROVEMENTS ===== */
+@media (hover: none) and (pointer: coarse) {
+  /* Larger touch targets */
+  .nav-link,
+  .btn,
+  .social-link,
+  .action-btn,
+  .control-btn,
+  .filter-btn,
+  .semester-btn,
+  .settings-tab {
+    min-height: 44px;
+    min-width: 44px;
+    padding: var(--space-3);
+  }
+
+  /* Remove hover effects on touch devices */
+  .nav-link:hover,
+  .btn:hover,
+  .social-link:hover,
+  .document-card:hover,
+  .playlist-card:hover,
+  .subject-card:hover {
+    transform: none;
+    box-shadow: var(--shadow-lg);
+  }
+
+  /* Add active states for touch feedback */
+  .nav-link:active,
+  .btn:active,
+  .social-link:active,
+  .control-btn:active,
+  .filter-btn:active {
+    transform: scale(0.95);
+    transition: transform 0.1s;
+  }
+
+  /* Better spacing for touch */
+  .header-nav {
+    gap: var(--space-3);
+  }
+
+  .social-nav {
+    gap: var(--space-3);
+  }
+}
+
+/* ===== LANDSCAPE ORIENTATION ===== */
+@media (orientation: landscape) and (max-height: 500px) {
+  .header-nav {
+    margin-top: 0;
+    padding-top: 0;
+    border-top: none;
+  }
+  
+  .hero-title {
+    font-size: var(--text-xl);
+  }
+  
+  .playlist-hero,
+  .fptu-hero,
+  .settings-hero,
+  .feedback-hero,
+  .documents-hero {
+    padding: var(--space-6) 0;
+  }
+}
+
+/* ===== HIGH DPI DISPLAYS ===== */
+@media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
+  /* Ensure crisp icons and images */
+  .header-logo i,
+  .nav-link i,
+  .social-link i {
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+}
+
+/* ===== PRINT STYLES ===== */
+@media print {
+  .header,
+  .main-sidebar,
+  .social-nav,
+  .auth-nav,
+  .btn,
+  .mobile-menu-btn {
+    display: none !important;
+  }
+  
+  .main-content {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+  }
+  
+  .content-area {
+    margin: 0;
+    width: 100%;
+  }
+}

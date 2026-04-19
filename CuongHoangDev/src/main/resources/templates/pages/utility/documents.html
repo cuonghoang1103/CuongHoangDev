@@ -1,0 +1,13 @@
+<!DOCTYPE html>
+<html lang="vi" xmlns:th="http://www.thymeleaf.org"
+      th:replace="layout/master :: master(~{::title}, ~{::content})">
+<head>
+    <title th:text="${title}">Documents</title>
+</head>
+<body>
+    <div th:fragment="content">
+        <!-- Include original documents design -->
+        <div th:include="pages/documents :: body"></div>
+    </div>
+</body>
+</html>

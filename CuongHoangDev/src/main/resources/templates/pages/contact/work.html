@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact for Work - CuongHoang Dev</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+    <link rel="stylesheet" th:href="@{/css/pages/contact.css}">
+</head>
+<body>
+    <div th:replace="~{layout/header :: header}"></div>
+    
+    <main class="contact-work-page">
+        <div class="container">
+            <h1>Let's Work Together</h1>
+            <p class="page-intro">I'm always interested in new opportunities and exciting projects. Let's discuss how we can collaborate.</p>
+            
+            <div class="work-content">
+                <div class="services-section">
+                    <h2>Services I Offer</h2>
+                    <div class="services-grid">
+                        <div class="service-card">
+                            <div class="service-icon">💻</div>
+                            <h3>Full-Stack Development</h3>
+                            <p>Complete web application development using modern technologies like Spring Boot, React, and more.</p>
+                            <ul class="service-features">
+                                <li>Frontend & Backend Development</li>
+                                <li>Database Design & Implementation</li>
+                                <li>API Development & Integration</li>
+                                <li>Responsive Web Design</li>
+                            </ul>
+                            <div class="service-price">Starting at $50/hour</div>
+                        </div>
+                        
+                        <div class="service-card">
+                            <div class="service-icon">🔍</div>
+                            <h3>Code Review & Consulting</h3>
+                            <p>Professional code review and technical consulting to improve your existing projects.</p>
+                            <ul class="service-features">
+                                <li>Code Quality Assessment</li>
+                                <li>Performance Optimization</li>
+                                <li>Security Review</li>
+                                <li>Best Practices Implementation</li>
+                            </ul>
+                            <div class="service-price">Starting at $75/hour</div>
+                        </div>
+                        
+                        <div class="service-card">
+                            <div class="service-icon">🎓</div>
+                            <h3>Training & Mentoring</h3>
+                            <p>One-on-one mentoring and team training sessions for developers at all levels.</p>
+                            <ul class="service-features">
+                                <li>Spring Boot Training</li>
+                                <li>Java Development Mentoring</li>
+                                <li>Career Guidance</li>
+                                <li>Technical Interview Prep</li>
+                            </ul>
+                            <div class="service-price">Starting at $40/hour</div>
+                        </div>
+                        
+                        <div class="service-card">
+                            <div class="service-icon">🚀</div>
+                            <h3>Project Architecture</h3>
+                            <p>Design and plan the technical architecture for your next big project.</p>
+                            <ul class="service-features">
+                                <li>System Design</li>
+                                <li>Technology Stack Selection</li>
+                                <li>Scalability Planning</li>
+                                <li>Documentation</li>
+                            </ul>
+                            <div class="service-price">Starting at $100/hour</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="contact-form-section">
+                    <h2>Start a Project</h2>
+                    <form class="work-contact-form" action="/contact/work" method="post">
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="name">Full Name *</label>
+                                <input type="text" id="name" name="name" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="email">Email Address *</label>
+                                <input type="email" id="email" name="email" required>
+                            </div>
+                        </div>
+                        
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="company">Company/Organization</label>
+                                <input type="text" id="company" name="company">
+                            </div>
+                            <div class="form-group">
+                                <label for="budget">Project Budget</label>
+                                <select id="budget" name="budget">
+                                    <option value="">Select Budget Range</option>
+                                    <option value="under-1k">Under $1,000</option>
+                                    <option value="1k-5k">$1,000 - $5,000</option>
+                                    <option value="5k-10k">$5,000 - $10,000</option>
+                                    <option value="10k-25k">$10,000 - $25,000</option>
+                                    <option value="25k-plus">$25,000+</option>
+                                </select>
+                            </div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="services">Services Needed</label>
+                            <div class="checkbox-group">
+                                <label><input type="checkbox" name="services" value="fullstack"> Full-Stack Development</label>
+                                <label><input type="checkbox" name="services" value="consulting"> Code Review & Consulting</label>
+                                <label><input type="checkbox" name="services" value="training"> Training & Mentoring</label>
+                                <label><input type="checkbox" name="services" value="architecture"> Project Architecture</label>
+                            </div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="timeline">Project Timeline</label>
+                            <select id="timeline" name="timeline">
+                                <option value="">Select Timeline</option>
+                                <option value="asap">ASAP</option>
+                                <option value="1-month">Within 1 month</option>
+                                <option value="2-3-months">2-3 months</option>
+                                <option value="3-6-months">3-6 months</option>
+                                <option value="6-months-plus">6+ months</option>
+                            </div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="description">Project Description *</label>
+                            <textarea id="description" name="description" rows="6" placeholder="Please describe your project, requirements, and any specific technologies you'd like to use..." required></textarea>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="attachments">Attachments (Optional)</label>
+                            <input type="file" id="attachments" name="attachments" multiple accept=".pdf,.doc,.docx,.txt">
+                            <small>You can attach project documents, wireframes, or any relevant files.</small>
+                        </div>
+                        
+                        <button type="submit" class="btn btn-primary btn-large">Send Project Inquiry</button>
+                    </form>
+                </div>
+            </div>
+            
+            <div class="work-process">
+                <h2>How We'll Work Together</h2>
+                <div class="process-steps">
+                    <div class="step">
+                        <div class="step-number">1</div>
+                        <h3>Initial Consultation</h3>
+                        <p>We'll discuss your project requirements, timeline, and budget in detail.</p>
+                    </div>
+                    <div class="step">
+                        <div class="step-number">2</div>
+                        <h3>Proposal & Planning</h3>
+                        <p>I'll provide a detailed proposal with project scope, timeline, and pricing.</p>
+                    </div>
+                    <div class="step">
+                        <div class="step-number">3</div>
+                        <h3>Development & Updates</h3>
+                        <p>Regular progress updates and milestone deliveries throughout the project.</p>
+                    </div>
+                    <div class="step">
+                        <div class="step-number">4</div>
+                        <h3>Delivery & Support</h3>
+                        <p>Final delivery with documentation and ongoing support as needed.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+    
+    <div th:replace="~{layout/footer :: footer}"></div>
+    
+    <script th:src="@{/js/main.js}"></script>
+    <script th:src="@{/js/pages/contact.js}"></script>
+</body>
+</html>

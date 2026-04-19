@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact Information - CuongHoang Dev</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+    <link rel="stylesheet" th:href="@{/css/pages/contact.css}">
+</head>
+<body>
+    <div th:replace="~{layout/header :: header}"></div>
+    
+    <main class="contact-info-page">
+        <div class="container">
+            <h1>Contact Information</h1>
+            <p class="page-intro">Here's how you can reach me. I'm always happy to connect and discuss new opportunities.</p>
+            
+            <div class="contact-info-grid">
+                <div class="contact-card">
+                    <div class="contact-icon">📧</div>
+                    <h3>Email</h3>
+                    <p>The best way to reach me for business inquiries and collaborations.</p>
+                    <div class="contact-details">
+                        <a href="mailto:contact@cuonghoang.dev">contact@cuonghoang.dev</a>
+                        <small>I typically respond within 24 hours</small>
+                    </div>
+                </div>
+                
+                <div class="contact-card">
+                    <div class="contact-icon">💼</div>
+                    <h3>LinkedIn</h3>
+                    <p>Connect with me professionally and see my career journey.</p>
+                    <div class="contact-details">
+                        <a href="https://linkedin.com/in/cuonghoang-dev" target="_blank">linkedin.com/in/cuonghoang-dev</a>
+                        <small>Professional networking and updates</small>
+                    </div>
+                </div>
+                
+                <div class="contact-card">
+                    <div class="contact-icon">💻</div>
+                    <h3>GitHub</h3>
+                    <p>Check out my code, contribute to projects, or report issues.</p>
+                    <div class="contact-details">
+                        <a href="https://github.com/cuonghoang-dev" target="_blank">github.com/cuonghoang-dev</a>
+                        <small>Open source projects and code samples</small>
+                    </div>
+                </div>
+                
+                <div class="contact-card">
+                    <div class="contact-icon">🐦</div>
+                    <h3>Twitter</h3>
+                    <p>Follow me for tech updates, thoughts, and quick interactions.</p>
+                    <div class="contact-details">
+                        <a href="https://twitter.com/cuonghoang_dev" target="_blank">@cuonghoang_dev</a>
+                        <small>Tech discussions and industry news</small>
+                    </div>
+                </div>
+                
+                <div class="contact-card">
+                    <div class="contact-icon">📱</div>
+                    <h3>Telegram</h3>
+                    <p>For quick messages and informal conversations.</p>
+                    <div class="contact-details">
+                        <a href="https://t.me/cuonghoang_dev" target="_blank">@cuonghoang_dev</a>
+                        <small>Quick questions and casual chat</small>
+                    </div>
+                </div>
+                
+                <div class="contact-card">
+                    <div class="contact-icon">💬</div>
+                    <h3>Discord</h3>
+                    <p>Join my community server for tech discussions and support.</p>
+                    <div class="contact-details">
+                        <a href="https://discord.gg/cuonghoang-dev" target="_blank">CuongHoang Dev Community</a>
+                        <small>Community discussions and help</small>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="location-info">
+                <h2>Location & Availability</h2>
+                <div class="location-grid">
+                    <div class="location-card">
+                        <h3>📍 Based in</h3>
+                        <p>Ho Chi Minh City, Vietnam</p>
+                        <small>GMT+7 (ICT)</small>
+                    </div>
+                    <div class="location-card">
+                        <h3>🕒 Working Hours</h3>
+                        <p>Monday - Friday: 9:00 AM - 6:00 PM</p>
+                        <small>Flexible for international clients</small>
+                    </div>
+                    <div class="location-card">
+                        <h3>🌍 Remote Work</h3>
+                        <p>Available for remote projects worldwide</p>
+                        <small>Experienced in remote collaboration</small>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="response-times">
+                <h2>Response Times</h2>
+                <div class="response-grid">
+                    <div class="response-item">
+                        <div class="response-method">Email</div>
+                        <div class="response-time">Within 24 hours</div>
+                        <div class="response-note">Business inquiries and detailed discussions</div>
+                    </div>
+                    <div class="response-item">
+                        <div class="response-method">Social Media</div>
+                        <div class="response-time">Within 4-8 hours</div>
+                        <div class="response-note">Quick questions and casual conversations</div>
+                    </div>
+                    <div class="response-item">
+                        <div class="response-method">Urgent Matters</div>
+                        <div class="response-time">Within 2 hours</div>
+                        <div class="response-note">Mark as urgent in subject line</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="contact-preferences">
+                <h2>Communication Preferences</h2>
+                <div class="preferences-list">
+                    <div class="preference-item">
+                        <h4>📧 For Business Inquiries</h4>
+                        <p>Please use email for project discussions, proposals, and formal communications.</p>
+                    </div>
+                    <div class="preference-item">
+                        <h4>💻 For Technical Questions</h4>
+                        <p>GitHub issues for code-related questions, or Discord for community discussions.</p>
+                    </div>
+                    <div class="preference-item">
+                        <h4>🤝 For Networking</h4>
+                        <p>LinkedIn is perfect for professional networking and career-related conversations.</p>
+                    </div>
+                    <div class="preference-item">
+                        <h4>💬 For Quick Chats</h4>
+                        <p>Twitter or Telegram for quick questions and informal conversations.</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="contact-cta">
+                <h2>Ready to Connect?</h2>
+                <p>Choose the method that works best for you, and let's start a conversation!</p>
+                <div class="cta-buttons">
+                    <a href="mailto:contact@cuonghoang.dev" class="btn btn-primary">Send Email</a>
+                    <a href="/contact/form" class="btn btn-secondary">Contact Form</a>
+                    <a href="/contact/work" class="btn btn-outline">Work Together</a>
+                </div>
+            </div>
+        </div>
+    </main>
+    
+    <div th:replace="~{layout/footer :: footer}"></div>
+    
+    <script th:src="@{/js/main.js}"></script>
+</body>
+</html>

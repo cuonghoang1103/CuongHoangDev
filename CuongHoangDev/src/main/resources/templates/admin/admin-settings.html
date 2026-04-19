@@ -1,0 +1,1050 @@
+<!DOCTYPE html>
+<html lang="vi" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Settings Management - CuongThai Admin</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        :root {
+            --primary-color: #667eea;
+            --secondary-color: #764ba2;
+            --success-color: #10b981;
+            --warning-color: #f59e0b;
+            --danger-color: #ef4444;
+            --info-color: #06b6d4;
+            --dark-color: #1f2937;
+            --light-color: #f8fafc;
+            --border-color: #e5e7eb;
+            --text-primary: #111827;
+            --text-secondary: #6b7280;
+            --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+            --radius: 0.5rem;
+            --radius-lg: 1rem;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            color: var(--text-primary);
+        }
+
+        .admin-container {
+            display: flex;
+            min-height: 100vh;
+        }
+
+        /* Sidebar */
+        .admin-sidebar {
+            width: 280px;
+            background: white;
+            box-shadow: var(--shadow-lg);
+            position: fixed;
+            height: 100vh;
+            overflow-y: auto;
+            z-index: 1000;
+        }
+
+        .sidebar-header {
+            padding: 2rem;
+            border-bottom: 1px solid var(--border-color);
+            text-align: center;
+        }
+
+        .sidebar-logo {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--primary-color);
+        }
+
+        .sidebar-nav {
+            padding: 1rem 0;
+        }
+
+        .nav-item {
+            margin: 0.5rem 1rem;
+        }
+
+        .nav-link {
+            display: flex;
+            align-items: center;
+            padding: 1rem;
+            color: var(--text-secondary);
+            text-decoration: none;
+            border-radius: var(--radius);
+            transition: all 0.3s ease;
+        }
+
+        .nav-link:hover,
+        .nav-link.active {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            transform: translateX(5px);
+        }
+
+        .nav-link i {
+            margin-right: 0.75rem;
+            width: 20px;
+        }
+
+        /* Main Content */
+        .admin-main {
+            flex: 1;
+            margin-left: 280px;
+            padding: 2rem;
+        }
+
+        .page-header {
+            background: white;
+            border-radius: var(--radius-lg);
+            padding: 2rem;
+            margin-bottom: 2rem;
+            box-shadow: var(--shadow);
+        }
+
+        .page-title {
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--text-primary);
+            margin-bottom: 0.5rem;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .page-subtitle {
+            color: var(--text-secondary);
+            font-size: 1.1rem;
+        }
+
+        /* Settings Tabs */
+        .settings-tabs {
+            background: white;
+            border-radius: var(--radius-lg);
+            box-shadow: var(--shadow);
+            margin-bottom: 2rem;
+            overflow: hidden;
+        }
+
+        .tab-header {
+            display: flex;
+            background: var(--light-color);
+            border-bottom: 1px solid var(--border-color);
+            overflow-x: auto;
+        }
+
+        .tab-button {
+            flex: 1;
+            min-width: 150px;
+            padding: 1rem 1.5rem;
+            border: none;
+            background: transparent;
+            color: var(--text-secondary);
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            white-space: nowrap;
+        }
+
+        .tab-button.active {
+            background: white;
+            color: var(--primary-color);
+            border-bottom: 3px solid var(--primary-color);
+        }
+
+        .tab-button:hover {
+            background: white;
+            color: var(--primary-color);
+        }
+
+        .tab-content {
+            display: none;
+            padding: 2rem;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        /* Settings Forms */
+        .settings-section {
+            background: white;
+            border-radius: var(--radius-lg);
+            padding: 2rem;
+            margin-bottom: 2rem;
+            box-shadow: var(--shadow);
+        }
+
+        .section-title {
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-label {
+            display: block;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 0.5rem;
+        }
+
+        .form-input,
+        .form-select,
+        .form-textarea {
+            width: 100%;
+            padding: 0.75rem 1rem;
+            border: 2px solid var(--border-color);
+            border-radius: var(--radius);
+            font-size: 1rem;
+            transition: border-color 0.3s ease;
+        }
+
+        .form-input:focus,
+        .form-select:focus,
+        .form-textarea:focus {
+            outline: none;
+            border-color: var(--primary-color);
+        }
+
+        .form-textarea {
+            resize: vertical;
+            min-height: 100px;
+        }
+
+        .form-description {
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+            margin-top: 0.5rem;
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1rem;
+        }
+
+        /* Toggle Switch */
+        .toggle-switch {
+            position: relative;
+            display: inline-block;
+            width: 60px;
+            height: 34px;
+        }
+
+        .toggle-switch input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+
+        .slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: #ccc;
+            transition: .4s;
+            border-radius: 34px;
+        }
+
+        .slider:before {
+            position: absolute;
+            content: "";
+            height: 26px;
+            width: 26px;
+            left: 4px;
+            bottom: 4px;
+            background-color: white;
+            transition: .4s;
+            border-radius: 50%;
+        }
+
+        input:checked + .slider {
+            background-color: var(--primary-color);
+        }
+
+        input:checked + .slider:before {
+            transform: translateX(26px);
+        }
+
+        .btn {
+            padding: 0.75rem 1.5rem;
+            border: none;
+            border-radius: var(--radius);
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .btn-success {
+            background: var(--success-color);
+            color: white;
+        }
+
+        .btn-warning {
+            background: var(--warning-color);
+            color: white;
+        }
+
+        .btn-danger {
+            background: var(--danger-color);
+            color: white;
+        }
+
+        .btn-outline {
+            background: transparent;
+            border: 2px solid var(--primary-color);
+            color: var(--primary-color);
+        }
+
+        .btn-outline:hover {
+            background: var(--primary-color);
+            color: white;
+        }
+
+        /* Status Indicators */
+        .status-indicator {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.5rem 1rem;
+            border-radius: var(--radius);
+            font-size: 0.9rem;
+            font-weight: 600;
+        }
+
+        .status-online {
+            background: #dcfce7;
+            color: #166534;
+        }
+
+        .status-offline {
+            background: #fef2f2;
+            color: #dc2626;
+        }
+
+        .status-warning {
+            background: #fef3c7;
+            color: #92400e;
+        }
+
+        /* System Info Cards */
+        .info-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .info-card {
+            background: white;
+            border-radius: var(--radius-lg);
+            padding: 1.5rem;
+            box-shadow: var(--shadow);
+            text-align: center;
+        }
+
+        .info-icon {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 1rem;
+            font-size: 1.5rem;
+            color: white;
+        }
+
+        .info-icon.system {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+        }
+
+        .info-icon.database {
+            background: linear-gradient(135deg, #10b981, #059669);
+        }
+
+        .info-icon.storage {
+            background: linear-gradient(135deg, #f59e0b, #d97706);
+        }
+
+        .info-icon.security {
+            background: linear-gradient(135deg, #ef4444, #dc2626);
+        }
+
+        .info-value {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--text-primary);
+            margin-bottom: 0.5rem;
+        }
+
+        .info-label {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+        }
+
+        /* Responsive */
+        @media (max-width: 1024px) {
+            .admin-sidebar {
+                transform: translateX(-100%);
+                transition: transform 0.3s ease;
+            }
+
+            .admin-sidebar.open {
+                transform: translateX(0);
+            }
+
+            .admin-main {
+                margin-left: 0;
+            }
+
+            .tab-header {
+                flex-direction: column;
+            }
+
+            .tab-button {
+                flex: none;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .form-row {
+                grid-template-columns: 1fr;
+            }
+
+            .info-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="admin-container">
+        <!-- Sidebar -->
+        <aside class="admin-sidebar">
+            <div class="sidebar-header">
+                <div class="sidebar-logo">
+                    <i class="fas fa-cog"></i>
+                    CuongThai Admin
+                </div>
+            </div>
+            <nav class="sidebar-nav">
+                <div class="nav-item">
+                    <a href="/admin/dashboard" class="nav-link">
+                        <i class="fas fa-tachometer-alt"></i>
+                        Dashboard
+                    </a>
+                </div>
+                <div class="nav-item">
+                    <a href="/admin/users" class="nav-link">
+                        <i class="fas fa-users"></i>
+                        User Management
+                    </a>
+                </div>
+                <div class="nav-item">
+                    <a href="/admin/blog" class="nav-link">
+                        <i class="fas fa-edit"></i>
+                        Content Management
+                    </a>
+                </div>
+                <div class="nav-item">
+                    <a href="/admin/music" class="nav-link">
+                        <i class="fas fa-music"></i>
+                        Music Management
+                    </a>
+                </div>
+                <div class="nav-item">
+                    <a href="/admin/documents" class="nav-link">
+                        <i class="fas fa-folder"></i>
+                        Document Management
+                    </a>
+                </div>
+                <div class="nav-item">
+                    <a href="/admin/admin-settings" class="nav-link active">
+                        <i class="fas fa-cog"></i>
+                        Settings Management
+                    </a>
+                </div>
+                <div class="nav-item">
+                    <a href="/logout" class="nav-link">
+                        <i class="fas fa-sign-out-alt"></i>
+                        Logout
+                    </a>
+                </div>
+            </nav>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="admin-main">
+            <!-- Page Header -->
+            <div class="page-header">
+                <h1 class="page-title">
+                    <i class="fas fa-cog"></i>
+                    Settings Management
+                </h1>
+                <p class="page-subtitle">
+                    Cấu hình hệ thống, bảo mật và tùy chỉnh website
+                </p>
+            </div>
+
+            <!-- System Status -->
+            <div class="info-grid">
+                <div class="info-card">
+                    <div class="info-icon system">
+                        <i class="fas fa-server"></i>
+                    </div>
+                    <div class="info-value">Online</div>
+                    <div class="info-label">System Status</div>
+                </div>
+                <div class="info-card">
+                    <div class="info-icon database">
+                        <i class="fas fa-database"></i>
+                    </div>
+                    <div class="info-value">Connected</div>
+                    <div class="info-label">Database</div>
+                </div>
+                <div class="info-card">
+                    <div class="info-icon storage">
+                        <i class="fas fa-hdd"></i>
+                    </div>
+                    <div class="info-value">2.1GB</div>
+                    <div class="info-label">Storage Used</div>
+                </div>
+                <div class="info-card">
+                    <div class="info-icon security">
+                        <i class="fas fa-shield-alt"></i>
+                    </div>
+                    <div class="info-value">Secure</div>
+                    <div class="info-label">Security Status</div>
+                </div>
+            </div>
+
+            <!-- Settings Tabs -->
+            <div class="settings-tabs">
+                <div class="tab-header">
+                    <button class="tab-button active" onclick="switchTab('general')">
+                        <i class="fas fa-cog"></i>
+                        General
+                    </button>
+                    <button class="tab-button" onclick="switchTab('email')">
+                        <i class="fas fa-envelope"></i>
+                        Email
+                    </button>
+                    <button class="tab-button" onclick="switchTab('security')">
+                        <i class="fas fa-shield-alt"></i>
+                        Security
+                    </button>
+                    <button class="tab-button" onclick="switchTab('backup')">
+                        <i class="fas fa-database"></i>
+                        Backup
+                    </button>
+                    <button class="tab-button" onclick="switchTab('advanced')">
+                        <i class="fas fa-tools"></i>
+                        Advanced
+                    </button>
+                </div>
+
+                <!-- General Settings Tab -->
+                <div id="general" class="tab-content active">
+                    <div class="settings-section">
+                        <h3 class="section-title">
+                            <i class="fas fa-globe"></i>
+                            Website Configuration
+                        </h3>
+                        <form id="generalSettingsForm">
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label class="form-label" for="siteName">Site Name</label>
+                                    <input type="text" id="siteName" class="form-input" value="CuongThai Portfolio">
+                                    <div class="form-description">The name of your website</div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="form-label" for="siteUrl">Site URL</label>
+                                    <input type="url" id="siteUrl" class="form-input" value="https://cuongthai.dev">
+                                    <div class="form-description">Your website's primary URL</div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label" for="siteDescription">Site Description</label>
+                                <textarea id="siteDescription" class="form-textarea">Full-stack developer portfolio showcasing modern web applications and innovative solutions.</textarea>
+                                <div class="form-description">Brief description for SEO and social media</div>
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label class="form-label" for="timezone">Timezone</label>
+                                    <select id="timezone" class="form-select">
+                                        <option value="Asia/Ho_Chi_Minh" selected>Asia/Ho Chi Minh</option>
+                                        <option value="UTC">UTC</option>
+                                        <option value="America/New_York">America/New York</option>
+                                        <option value="Europe/London">Europe/London</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label class="form-label" for="language">Default Language</label>
+                                    <select id="language" class="form-select">
+                                        <option value="vi" selected>Tiếng Việt</option>
+                                        <option value="en">English</option>
+                                        <option value="ja">日本語</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">Features</label>
+                                <div style="display: flex; flex-direction: column; gap: 1rem;">
+                                    <div style="display: flex; justify-content: space-between; align-items: center;">
+                                        <div>
+                                            <strong>User Registration</strong>
+                                            <div style="font-size: 0.9rem; color: var(--text-secondary);">Allow new users to register</div>
+                                        </div>
+                                        <label class="toggle-switch">
+                                            <input type="checkbox" checked>
+                                            <span class="slider"></span>
+                                        </label>
+                                    </div>
+                                    <div style="display: flex; justify-content: space-between; align-items: center;">
+                                        <div>
+                                            <strong>Comments System</strong>
+                                            <div style="font-size: 0.9rem; color: var(--text-secondary);">Enable comments on blog posts</div>
+                                        </div>
+                                        <label class="toggle-switch">
+                                            <input type="checkbox" checked>
+                                            <span class="slider"></span>
+                                        </label>
+                                    </div>
+                                    <div style="display: flex; justify-content: space-between; align-items: center;">
+                                        <div>
+                                            <strong>Maintenance Mode</strong>
+                                            <div style="font-size: 0.9rem; color: var(--text-secondary);">Put website in maintenance mode</div>
+                                        </div>
+                                        <label class="toggle-switch">
+                                            <input type="checkbox">
+                                            <span class="slider"></span>
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div style="display: flex; gap: 1rem; margin-top: 2rem;">
+                                <button type="submit" class="btn btn-primary">
+                                    <i class="fas fa-save"></i>
+                                    Save Changes
+                                </button>
+                                <button type="button" class="btn btn-outline" onclick="resetForm('generalSettingsForm')">
+                                    <i class="fas fa-undo"></i>
+                                    Reset
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+
+                <!-- Email Settings Tab -->
+                <div id="email" class="tab-content">
+                    <div class="settings-section">
+                        <h3 class="section-title">
+                            <i class="fas fa-envelope"></i>
+                            SMTP Configuration
+                        </h3>
+                        <form id="emailSettingsForm">
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label class="form-label" for="smtpHost">SMTP Host</label>
+                                    <input type="text" id="smtpHost" class="form-input" value="smtp.gmail.com">
+                                </div>
+                                <div class="form-group">
+                                    <label class="form-label" for="smtpPort">SMTP Port</label>
+                                    <input type="number" id="smtpPort" class="form-input" value="587">
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label class="form-label" for="smtpUsername">Username</label>
+                                    <input type="email" id="smtpUsername" class="form-input" value="cuongthaihnhe176322@gmail.com">
+                                </div>
+                                <div class="form-group">
+                                    <label class="form-label" for="smtpPassword">Password</label>
+                                    <input type="password" id="smtpPassword" class="form-input" placeholder="••••••••••••••••">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">Email Settings</label>
+                                <div style="display: flex; flex-direction: column; gap: 1rem;">
+                                    <div style="display: flex; justify-content: space-between; align-items: center;">
+                                        <div>
+                                            <strong>Enable SSL/TLS</strong>
+                                            <div style="font-size: 0.9rem; color: var(--text-secondary);">Use secure connection</div>
+                                        </div>
+                                        <label class="toggle-switch">
+                                            <input type="checkbox" checked>
+                                            <span class="slider"></span>
+                                        </label>
+                                    </div>
+                                    <div style="display: flex; justify-content: space-between; align-items: center;">
+                                        <div>
+                                            <strong>Email Notifications</strong>
+                                            <div style="font-size: 0.9rem; color: var(--text-secondary);">Send system notifications</div>
+                                        </div>
+                                        <label class="toggle-switch">
+                                            <input type="checkbox" checked>
+                                            <span class="slider"></span>
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div style="display: flex; gap: 1rem; margin-top: 2rem;">
+                                <button type="submit" class="btn btn-primary">
+                                    <i class="fas fa-save"></i>
+                                    Save Settings
+                                </button>
+                                <button type="button" class="btn btn-success" onclick="testEmail()">
+                                    <i class="fas fa-paper-plane"></i>
+                                    Test Email
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+
+                <!-- Security Settings Tab -->
+                <div id="security" class="tab-content">
+                    <div class="settings-section">
+                        <h3 class="section-title">
+                            <i class="fas fa-shield-alt"></i>
+                            Security Configuration
+                        </h3>
+                        <form id="securitySettingsForm">
+                            <div class="form-group">
+                                <label class="form-label">Authentication Settings</label>
+                                <div style="display: flex; flex-direction: column; gap: 1rem;">
+                                    <div style="display: flex; justify-content: space-between; align-items: center;">
+                                        <div>
+                                            <strong>Two-Factor Authentication</strong>
+                                            <div style="font-size: 0.9rem; color: var(--text-secondary);">Require 2FA for admin accounts</div>
+                                        </div>
+                                        <label class="toggle-switch">
+                                            <input type="checkbox">
+                                            <span class="slider"></span>
+                                        </label>
+                                    </div>
+                                    <div style="display: flex; justify-content: space-between; align-items: center;">
+                                        <div>
+                                            <strong>Strong Password Policy</strong>
+                                            <div style="font-size: 0.9rem; color: var(--text-secondary);">Enforce complex passwords</div>
+                                        </div>
+                                        <label class="toggle-switch">
+                                            <input type="checkbox" checked>
+                                            <span class="slider"></span>
+                                        </label>
+                                    </div>
+                                    <div style="display: flex; justify-content: space-between; align-items: center;">
+                                        <div>
+                                            <strong>Login Attempt Limiting</strong>
+                                            <div style="font-size: 0.9rem; color: var(--text-secondary);">Block after failed attempts</div>
+                                        </div>
+                                        <label class="toggle-switch">
+                                            <input type="checkbox" checked>
+                                            <span class="slider"></span>
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label class="form-label" for="sessionTimeout">Session Timeout (minutes)</label>
+                                    <input type="number" id="sessionTimeout" class="form-input" value="30">
+                                </div>
+                                <div class="form-group">
+                                    <label class="form-label" for="maxLoginAttempts">Max Login Attempts</label>
+                                    <input type="number" id="maxLoginAttempts" class="form-input" value="5">
+                                </div>
+                            </div>
+                            <div style="display: flex; gap: 1rem; margin-top: 2rem;">
+                                <button type="submit" class="btn btn-primary">
+                                    <i class="fas fa-save"></i>
+                                    Save Security Settings
+                                </button>
+                                <button type="button" class="btn btn-warning" onclick="generateApiKey()">
+                                    <i class="fas fa-key"></i>
+                                    Generate API Key
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+
+                <!-- Backup Settings Tab -->
+                <div id="backup" class="tab-content">
+                    <div class="settings-section">
+                        <h3 class="section-title">
+                            <i class="fas fa-database"></i>
+                            Backup & Restore
+                        </h3>
+                        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2rem;">
+                            <!-- Backup Options -->
+                            <div>
+                                <h4 style="margin-bottom: 1rem;">Backup Options</h4>
+                                <div style="display: flex; flex-direction: column; gap: 1rem;">
+                                    <button class="btn btn-primary" onclick="createBackup('full')">
+                                        <i class="fas fa-download"></i>
+                                        Full Backup
+                                    </button>
+                                    <button class="btn btn-outline" onclick="createBackup('database')">
+                                        <i class="fas fa-database"></i>
+                                        Database Only
+                                    </button>
+                                    <button class="btn btn-outline" onclick="createBackup('files')">
+                                        <i class="fas fa-folder"></i>
+                                        Files Only
+                                    </button>
+                                </div>
+                            </div>
+
+                            <!-- Restore Options -->
+                            <div>
+                                <h4 style="margin-bottom: 1rem;">Restore Options</h4>
+                                <div style="display: flex; flex-direction: column; gap: 1rem;">
+                                    <input type="file" id="backupFile" accept=".zip,.sql" style="margin-bottom: 1rem;">
+                                    <button class="btn btn-warning" onclick="restoreBackup()">
+                                        <i class="fas fa-upload"></i>
+                                        Restore from File
+                                    </button>
+                                    <button class="btn btn-danger" onclick="resetDatabase()">
+                                        <i class="fas fa-exclamation-triangle"></i>
+                                        Reset Database
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Automatic Backup Settings -->
+                        <div style="margin-top: 2rem; padding-top: 2rem; border-top: 1px solid var(--border-color);">
+                            <h4 style="margin-bottom: 1rem;">Automatic Backup</h4>
+                            <form id="autoBackupForm">
+                                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
+                                    <div>
+                                        <strong>Enable Automatic Backup</strong>
+                                        <div style="font-size: 0.9rem; color: var(--text-secondary);">Schedule regular backups</div>
+                                    </div>
+                                    <label class="toggle-switch">
+                                        <input type="checkbox">
+                                        <span class="slider"></span>
+                                    </label>
+                                </div>
+                                <div class="form-row">
+                                    <div class="form-group">
+                                        <label class="form-label" for="backupFrequency">Backup Frequency</label>
+                                        <select id="backupFrequency" class="form-select">
+                                            <option value="daily">Daily</option>
+                                            <option value="weekly" selected>Weekly</option>
+                                            <option value="monthly">Monthly</option>
+                                        </select>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="form-label" for="backupTime">Backup Time</label>
+                                        <input type="time" id="backupTime" class="form-input" value="02:00">
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Advanced Settings Tab -->
+                <div id="advanced" class="tab-content">
+                    <div class="settings-section">
+                        <h3 class="section-title">
+                            <i class="fas fa-tools"></i>
+                            Advanced Configuration
+                        </h3>
+                        <form id="advancedSettingsForm">
+                            <div class="form-group">
+                                <label class="form-label">Performance Settings</label>
+                                <div style="display: flex; flex-direction: column; gap: 1rem;">
+                                    <div style="display: flex; justify-content: space-between; align-items: center;">
+                                        <div>
+                                            <strong>Enable Caching</strong>
+                                            <div style="font-size: 0.9rem; color: var(--text-secondary);">Cache static content for better performance</div>
+                                        </div>
+                                        <label class="toggle-switch">
+                                            <input type="checkbox" checked>
+                                            <span class="slider"></span>
+                                        </label>
+                                    </div>
+                                    <div style="display: flex; justify-content: space-between; align-items: center;">
+                                        <div>
+                                            <strong>Enable Compression</strong>
+                                            <div style="font-size: 0.9rem; color: var(--text-secondary);">Compress responses to reduce bandwidth</div>
+                                        </div>
+                                        <label class="toggle-switch">
+                                            <input type="checkbox" checked>
+                                            <span class="slider"></span>
+                                        </label>
+                                    </div>
+                                    <div style="display: flex; justify-content: space-between; align-items: center;">
+                                        <div>
+                                            <strong>Debug Mode</strong>
+                                            <div style="font-size: 0.9rem; color: var(--text-secondary);">Enable detailed error logging</div>
+                                        </div>
+                                        <label class="toggle-switch">
+                                            <input type="checkbox">
+                                            <span class="slider"></span>
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label class="form-label" for="maxFileSize">Max Upload Size (MB)</label>
+                                    <input type="number" id="maxFileSize" class="form-input" value="10">
+                                </div>
+                                <div class="form-group">
+                                    <label class="form-label" for="logLevel">Log Level</label>
+                                    <select id="logLevel" class="form-select">
+                                        <option value="ERROR">ERROR</option>
+                                        <option value="WARN">WARN</option>
+                                        <option value="INFO" selected>INFO</option>
+                                        <option value="DEBUG">DEBUG</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div style="display: flex; gap: 1rem; margin-top: 2rem;">
+                                <button type="submit" class="btn btn-primary">
+                                    <i class="fas fa-save"></i>
+                                    Save Advanced Settings
+                                </button>
+                                <button type="button" class="btn btn-danger" onclick="clearCache()">
+                                    <i class="fas fa-trash"></i>
+                                    Clear Cache
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script>
+        // Settings Management JavaScript
+
+        // Tab switching
+        function switchTab(tabName) {
+            // Remove active class from all tabs
+            document.querySelectorAll('.tab-button').forEach(btn => btn.classList.remove('active'));
+            document.querySelectorAll('.tab-content').forEach(content => content.classList.remove('active'));
+
+            // Add active class to selected tab
+            event.target.classList.add('active');
+            document.getElementById(tabName).classList.add('active');
+        }
+
+        // Form handling
+        document.getElementById('generalSettingsForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            alert('General settings saved successfully!');
+        });
+
+        document.getElementById('emailSettingsForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            alert('Email settings saved successfully!');
+        });
+
+        document.getElementById('securitySettingsForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            alert('Security settings saved successfully!');
+        });
+
+        document.getElementById('advancedSettingsForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            alert('Advanced settings saved successfully!');
+        });
+
+        // Utility functions
+        function resetForm(formId) {
+            if (confirm('Reset form to default values?')) {
+                document.getElementById(formId).reset();
+            }
+        }
+
+        function testEmail() {
+            alert('Sending test email... Check your inbox!');
+        }
+
+        function generateApiKey() {
+            const apiKey = 'sk-' + Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15);
+            alert(`New API Key generated: ${apiKey}`);
+        }
+
+        function createBackup(type) {
+            alert(`Creating ${type} backup... This may take a few minutes.`);
+        }
+
+        function restoreBackup() {
+            const file = document.getElementById('backupFile').files[0];
+            if (!file) {
+                alert('Please select a backup file first.');
+                return;
+            }
+            if (confirm('This will overwrite current data. Continue?')) {
+                alert(`Restoring from ${file.name}...`);
+            }
+        }
+
+        function resetDatabase() {
+            if (confirm('WARNING: This will delete ALL data. Are you sure?')) {
+                if (confirm('This action cannot be undone. Proceed?')) {
+                    alert('Database reset initiated...');
+                }
+            }
+        }
+
+        function clearCache() {
+            if (confirm('Clear all cached data?')) {
+                alert('Cache cleared successfully!');
+            }
+        }
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', function() {
+            console.log('Settings Management System initialized');
+        });
+    </script>
+</body>
+</html>

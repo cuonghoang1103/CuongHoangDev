@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<!--
+Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this template
+-->
+<html lang="vi" xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Sidebar</title>
+    </head>
+    <body>
+        <aside class="main-sidebar" th:fragment="sidebar">
+            <!-- Profile Section -->
+            <div class="sidebar-profile">
+                <img th:src="@{/img/cuongthai.jpg}" alt="CuongThai Avatar" class="sidebar-avatar">
+                <div class="sidebar-name">CuongThai</div>
+                <div class="sidebar-role">Full-stack Developer</div>
+            </div>
+
+            <!-- Navigation -->
+            <nav class="sidebar-nav" role="navigation" aria-label="Sidebar navigation">
+                <div class="sidebar-nav-title">Navigation</div>
+                <ul class="sidebar-nav-list">
+                    <li class="sidebar-nav-item">
+                        <a th:href="@{/profile}" class="sidebar-nav-link">
+                            <i class="fas fa-user-circle"></i>
+                            <span>Profile</span>
+                        </a>
+                    </li>
+                    <li class="sidebar-nav-item">
+                        <a th:href="@{/shop}" class="sidebar-nav-link">
+                            <i class="fas fa-shopping-cart"></i>
+                            <span>Shop</span>
+                        </a>
+                    </li>
+                    <li class="sidebar-nav-item">
+                        <a th:href="@{/projects}" class="sidebar-nav-link">
+                            <i class="fas fa-code"></i>
+                            <span>Dự án</span>
+                        </a>
+                    </li>
+                    <li class="sidebar-nav-item">
+                        <a th:href="@{/explore}" class="sidebar-nav-link">
+                            <i class="fas fa-compass"></i>
+                            <span>Khám phá</span>
+                        </a>
+                    </li>
+                    <li class="sidebar-nav-item">
+                        <a th:href="@{/contact-work}" class="sidebar-nav-link">
+                            <i class="fas fa-briefcase"></i>
+                            <span>Contact for Work</span>
+                        </a>
+                    </li>
+                    <li class="sidebar-nav-item">
+                        <a th:href="@{/faq}" class="sidebar-nav-link">
+                            <i class="fas fa-question-circle"></i>
+                            <span>FAQ</span>
+                        </a>
+                    </li>
+                    <li class="sidebar-nav-item">
+                        <a th:href="@{/contact}" class="sidebar-nav-link">
+                            <i class="fas fa-envelope"></i>
+                            <span>Liên hệ</span>
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+
+            <!-- Personal Section -->
+            <nav class="sidebar-nav" role="navigation" aria-label="Personal navigation">
+                <div class="sidebar-nav-title">Cá nhân</div>
+                <ul class="sidebar-nav-list">
+                    <li class="sidebar-nav-item">
+                        <a th:href="@{/settings}" class="sidebar-nav-link">
+                            <i class="fas fa-cog"></i>
+                            <span>Cài đặt</span>
+                        </a>
+                    </li>
+                    <li class="sidebar-nav-item">
+                        <a th:href="@{/feedback}" class="sidebar-nav-link">
+                            <i class="fas fa-comment-dots"></i>
+                            <span>Feedback</span>
+                        </a>
+                    </li>
+                    <li class="sidebar-nav-item">
+                        <a th:href="@{/documents}" class="sidebar-nav-link">
+                            <i class="fas fa-file-archive"></i>
+                            <span>Tài liệu</span>
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+
+            <!-- Skills Section -->
+            <div class="sidebar-nav">
+                <div class="sidebar-nav-title">Skills</div>
+                <div class="skill-tags">
+                    <span class="tech-tag">Java</span>
+                    <span class="tech-tag">Spring Boot</span>
+                    <span class="tech-tag">React</span>
+                    <span class="tech-tag">JavaScript</span>
+                    <span class="tech-tag">MySQL</span>
+                    <span class="tech-tag">Git</span>
+                </div>
+            </div>
+
+            <!-- Social Links -->
+            <div class="sidebar-social">
+                <div class="sidebar-social-title">Connect</div>
+                <div class="sidebar-social-links">
+                    <a href="https://github.com/s2hungbu2s" target="_blank" class="sidebar-social-link" title="GitHub">
+                        <i class="fab fa-github"></i>
+                    </a>
+                    <a href="https://linkedin.com/in/cuongthai" target="_blank" class="sidebar-social-link" title="LinkedIn">
+                        <i class="fab fa-linkedin"></i>
+                    </a>
+                    <a href="https://twitter.com/Hncuong311" target="_blank" class="sidebar-social-link" title="Twitter">
+                        <i class="fab fa-twitter"></i>
+                    </a>
+                    <a href="https://facebook.com/CuongThaiswit" target="_blank" class="sidebar-social-link" title="Facebook">
+                        <i class="fab fa-facebook"></i>
+                    </a>
+                </div>
+            </div>
+
+            <!-- Coming Soon Section -->
+            <div class="sidebar-coming-soon">
+                <div class="coming-soon-text">
+                    <i class="fas fa-clock"></i>
+                    <span>More widgets coming soon...</span>
+                </div>
+            </div>
+        </aside>
+    </body>
+</html>

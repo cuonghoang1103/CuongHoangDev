@@ -1,0 +1,13 @@
+<!DOCTYPE html>
+<html lang="vi" xmlns:th="http://www.thymeleaf.org"
+      th:replace="layout/master :: master(~{::title}, ~{::content})">
+<head>
+    <title th:text="${title}">Khám phá</title>
+</head>
+<body>
+    <div th:fragment="content">
+        <!-- Include original explore design -->
+        <div th:replace="pages/explore :: body"></div>
+    </div>
+</body>
+</html>

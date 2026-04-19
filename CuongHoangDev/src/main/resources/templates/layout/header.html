@@ -1,0 +1,431 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<body>
+    <header class="main-header" th:fragment="header" role="banner">
+        <div class="header-content">
+            <!-- Mobile Menu Button -->
+            <button class="mobile-menu-btn" onclick="toggleSidebar()" style="display: none;" aria-label="Toggle navigation menu">
+                <i class="fas fa-bars" aria-hidden="true"></i>
+                <span class="sr-only">Menu</span>
+            </button>
+
+            <!-- Logo -->
+            <a class="header-logo" href="/" th:href="@{/}">
+                <i class="fas fa-user-astronaut"></i>
+                <span>CuongThai</span>
+            </a>
+
+            <!-- Navigation Menu -->
+            <nav class="header-nav" role="navigation" aria-label="Main navigation">
+                <a class="nav-link" th:href="@{/}" aria-current="page">
+                    <i class="fas fa-home" aria-hidden="true"></i>
+                    <span>Trang chủ</span>
+                </a>
+                <a class="nav-link" th:href="@{/about}">
+                    <i class="fas fa-user"></i>
+                    <span>Giới thiệu</span>
+                </a>
+                <a class="nav-link" th:href="@{/blog}">
+                    <i class="fas fa-blog"></i>
+                    <span>Blog</span>
+                </a>
+                <a class="nav-link" th:href="@{/playlist}">
+                    <i class="fas fa-music"></i>
+                    <span>Playlist</span>
+                </a>
+                <a class="nav-link" th:href="@{/fptu}">
+                    <i class="fas fa-graduation-cap"></i>
+                    <span>FPTU</span>
+                </a>
+                <a class="nav-link" th:href="@{/game}">
+                    <i class="fas fa-gamepad"></i>
+                    <span>Game</span>
+                </a>
+                <a class="nav-link" th:href="@{/contact}">
+                    <i class="fas fa-envelope"></i>
+                    <span>Liên hệ</span>
+                </a>
+            </nav>
+
+            <!-- Search Bar -->
+            <div class="header-search">
+                <form class="search-form" action="/search" method="GET">
+                    <div class="search-input-wrapper">
+                        <input type="text"
+                               name="q"
+                               class="search-input"
+                               placeholder="Tìm kiếm..."
+                               th:value="${param.q}"
+                               autocomplete="off">
+                        <button type="submit" class="search-btn" title="Tìm kiếm">
+                            <i class="fas fa-search"></i>
+                        </button>
+                    </div>
+                    <div class="search-suggestions" id="searchSuggestions" style="display: none;">
+                        <!-- Search suggestions will be populated here -->
+                    </div>
+                </form>
+            </div>
+
+            <!-- Header Actions -->
+            <div class="header-actions">
+                <!-- Social Media Icons -->
+                <div class="social-nav">
+                    <a href="https://github.com/s2hungbu2s" target="_blank" class="social-link" title="GitHub">
+                        <i class="fab fa-github"></i>
+                    </a>
+                    <a href="https://linkedin.com/in/cuongthai" target="_blank" class="social-link" title="LinkedIn">
+                        <i class="fab fa-linkedin"></i>
+                    </a>
+                    <a href="https://facebook.com/CuongThaiswit" target="_blank" class="social-link" title="Facebook">
+                        <i class="fab fa-facebook"></i>
+                    </a>
+                </div>
+
+                <!-- Auth Navigation -->
+                <div class="auth-nav" sec:authorize="!isAuthenticated()">
+                    <a href="/auth/login" class="nav-link">
+                        <span>Login</span>
+                    </a>
+                    <a href="/auth/register" class="btn btn-primary">
+                        <span>Register</span>
+                    </a>
+                </div>
+
+                <!-- Debug: Show authentication status -->
+                <div style="font-size: 12px; color: red; margin: 0 10px;">
+                    <span sec:authorize="isAuthenticated()">✅ Logged In</span>
+                    <span sec:authorize="!isAuthenticated()">❌ Not Logged In</span>
+                </div>
+
+                <div class="user-nav" sec:authorize="isAuthenticated()">
+                    <div class="user-dropdown">
+                        <button class="user-btn" onclick="toggleUserMenu()">
+                            <div class="user-avatar">
+                                <span sec:authentication="principal.firstName" th:text="${#strings.substring(#authentication.principal.firstName ?: 'U', 0, 1)}">U</span>
+                            </div>
+                            <span sec:authentication="principal.fullName">User</span>
+                            <i class="fas fa-chevron-down"></i>
+                        </button>
+
+                        <div class="user-menu" id="userMenu">
+                            <div class="user-info">
+                                <div class="user-name" sec:authentication="principal.fullName">User Name</div>
+                                <div class="user-email" sec:authentication="principal.email">user@example.com</div>
+                            </div>
+                            <hr>
+                            <a href="/user/dashboard" class="menu-item">
+                                <i class="fas fa-tachometer-alt"></i> Dashboard
+                            </a>
+                            <div sec:authorize="hasRole('ADMIN')">
+                                <hr>
+                                <a href="/admin/dashboard" class="menu-item admin-link">
+                                    <i class="fas fa-crown"></i> Admin Panel
+                                </a>
+                            </div>
+                            <hr>
+                            <form th:action="@{/auth/logout}" method="post" style="margin: 0;">
+                                <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
+                                <button type="submit" class="menu-item logout" style="width: 100%; text-align: left; background: none; border: none; cursor: pointer;">
+                                    <i class="fas fa-sign-out-alt"></i> Đăng xuất
+                                </button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Theme Toggle -->
+                <button id="themeToggle" class="theme-toggle" title="Toggle theme">
+                    <i id="themeIcon" class="fas fa-moon"></i>
+                </button>
+
+                <!-- Mobile Menu Toggle -->
+                <button id="mobileMenuToggle" class="mobile-menu-toggle" title="Toggle menu">
+                    <i class="fas fa-bars"></i>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Header Extension Section -->
+    <section class="header-extension collapsed" id="headerExtension">
+        <div class="header-extension-content">
+            <!-- Quick Actions -->
+            <div class="quick-actions">
+                <h3 class="section-title">
+                    <i class="fas fa-cog"></i>
+                    Cài đặt
+                </h3>
+                <div class="action-links">
+                    <a href="#" class="action-link">
+                        <i class="fas fa-comment"></i>
+                        <span>Feedback</span>
+                    </a>
+                    <a href="#" class="action-link">
+                        <i class="fas fa-file-alt"></i>
+                        <span>Tài liệu</span>
+                    </a>
+                </div>
+            </div>
+
+            <!-- Skills Section -->
+            <div class="skills-section">
+                <h3 class="section-title">
+                    <i class="fas fa-code skill-icon"></i>
+                    <span class="title-text">SKILLS</span>
+                    <div class="title-line"></div>
+                </h3>
+                <div class="skills-grid">
+                    <div class="skill-item">
+                        <i class="fab fa-java skill-item-icon"></i>
+                        <span class="skill-name">Java</span>
+                        <div class="skill-level">
+                            <div class="skill-progress" style="width: 90%"></div>
+                        </div>
+                    </div>
+                    <div class="skill-item">
+                        <i class="fas fa-leaf skill-item-icon"></i>
+                        <span class="skill-name">Spring Boot</span>
+                        <div class="skill-level">
+                            <div class="skill-progress" style="width: 85%"></div>
+                        </div>
+                    </div>
+                    <div class="skill-item">
+                        <i class="fab fa-react skill-item-icon"></i>
+                        <span class="skill-name">React</span>
+                        <div class="skill-level">
+                            <div class="skill-progress" style="width: 80%"></div>
+                        </div>
+                    </div>
+                    <div class="skill-item">
+                        <i class="fab fa-js-square skill-item-icon"></i>
+                        <span class="skill-name">JavaScript</span>
+                        <div class="skill-level">
+                            <div class="skill-progress" style="width: 88%"></div>
+                        </div>
+                    </div>
+                    <div class="skill-item">
+                        <i class="fas fa-database skill-item-icon"></i>
+                        <span class="skill-name">MySQL</span>
+                        <div class="skill-level">
+                            <div class="skill-progress" style="width: 75%"></div>
+                        </div>
+                    </div>
+                    <div class="skill-item">
+                        <i class="fab fa-git-alt skill-item-icon"></i>
+                        <span class="skill-name">Git</span>
+                        <div class="skill-level">
+                            <div class="skill-progress" style="width: 92%"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Connect Section -->
+            <div class="connect-section">
+                <h3 class="section-title">
+                    <i class="fas fa-link connect-icon"></i>
+                    <span class="title-text">CONNECT</span>
+                    <div class="title-line"></div>
+                </h3>
+                <div class="connect-grid">
+                    <a href="https://github.com/s2hungbu2s" target="_blank" class="connect-card github">
+                        <div class="connect-icon-wrapper">
+                            <i class="fab fa-github"></i>
+                        </div>
+                        <div class="connect-info">
+                            <span class="connect-name">GitHub</span>
+                            <span class="connect-desc">Code repositories</span>
+                        </div>
+                        <i class="fas fa-external-link-alt connect-external"></i>
+                    </a>
+                    <a href="https://linkedin.com/in/cuongthai" target="_blank" class="connect-card linkedin">
+                        <div class="connect-icon-wrapper">
+                            <i class="fab fa-linkedin"></i>
+                        </div>
+                        <div class="connect-info">
+                            <span class="connect-name">LinkedIn</span>
+                            <span class="connect-desc">Professional network</span>
+                        </div>
+                        <i class="fas fa-external-link-alt connect-external"></i>
+                    </a>
+                    <a href="https://twitter.com/cuongthai" target="_blank" class="connect-card twitter">
+                        <div class="connect-icon-wrapper">
+                            <i class="fab fa-twitter"></i>
+                        </div>
+                        <div class="connect-info">
+                            <span class="connect-name">Twitter</span>
+                            <span class="connect-desc">Latest updates</span>
+                        </div>
+                        <i class="fas fa-external-link-alt connect-external"></i>
+                    </a>
+                    <a href="https://facebook.com/CuongThaiswit" target="_blank" class="connect-card facebook">
+                        <div class="connect-icon-wrapper">
+                            <i class="fab fa-facebook"></i>
+                        </div>
+                        <div class="connect-info">
+                            <span class="connect-name">Facebook</span>
+                            <span class="connect-desc">Personal updates</span>
+                        </div>
+                        <i class="fas fa-external-link-alt connect-external"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Toggle Button -->
+        <button class="header-extension-toggle" onclick="toggleHeaderExtension()">
+            <i class="fas fa-chevron-down" id="extensionToggleIcon"></i>
+        </button>
+    </section>
+
+    <!-- Sidebar Overlay -->
+    <div id="sidebarOverlay" class="sidebar-overlay"></div>
+
+    <script>
+        // User menu toggle
+        function toggleUserMenu() {
+            const userMenu = document.getElementById('userMenu');
+            userMenu.classList.toggle('show');
+        }
+
+        // Close user menu when clicking outside
+        document.addEventListener('click', function(event) {
+            const userDropdown = document.querySelector('.user-dropdown');
+            const userMenu = document.getElementById('userMenu');
+
+            if (userDropdown && !userDropdown.contains(event.target)) {
+                userMenu?.classList.remove('show');
+            }
+        });
+
+        // Mobile sidebar toggle
+        function toggleSidebar() {
+            const sidebar = document.querySelector('.main-sidebar');
+            if (sidebar) {
+                sidebar.classList.toggle('open');
+            }
+        }
+
+        // Show mobile menu button on smaller screens
+        function checkScreenSize() {
+            const mobileBtn = document.querySelector('.mobile-menu-btn');
+            if (mobileBtn) {
+                if (window.innerWidth <= 1024) {
+                    mobileBtn.style.display = 'flex';
+                } else {
+                    mobileBtn.style.display = 'none';
+                    // Close sidebar on larger screens
+                    const sidebar = document.querySelector('.main-sidebar');
+                    if (sidebar) {
+                        sidebar.classList.remove('open');
+                    }
+                }
+            }
+        }
+
+        // Check screen size on load and resize
+        window.addEventListener('load', checkScreenSize);
+        window.addEventListener('resize', checkScreenSize);
+
+        // Close sidebar when clicking outside
+        document.addEventListener('click', function(event) {
+            const sidebar = document.querySelector('.main-sidebar');
+            const mobileBtn = document.querySelector('.mobile-menu-btn');
+
+            if (sidebar && sidebar.classList.contains('open') &&
+                !sidebar.contains(event.target) &&
+                !mobileBtn.contains(event.target)) {
+                sidebar.classList.remove('open');
+            }
+        });
+
+        // Header extension toggle
+        function toggleHeaderExtension() {
+            const extension = document.getElementById('headerExtension');
+            const toggleIcon = document.getElementById('extensionToggleIcon');
+
+            if (extension.classList.contains('collapsed')) {
+                extension.classList.remove('collapsed');
+                toggleIcon.className = 'fas fa-chevron-up';
+            } else {
+                extension.classList.add('collapsed');
+                toggleIcon.className = 'fas fa-chevron-down';
+            }
+        }
+
+        // Search functionality
+        document.addEventListener('DOMContentLoaded', function() {
+            const searchInput = document.querySelector('.search-input');
+            const searchSuggestions = document.getElementById('searchSuggestions');
+            let searchTimeout;
+
+            if (searchInput) {
+                searchInput.addEventListener('input', function() {
+                    const query = this.value.trim();
+
+                    clearTimeout(searchTimeout);
+
+                    if (query.length >= 2) {
+                        searchTimeout = setTimeout(() => {
+                            fetchSearchSuggestions(query);
+                        }, 300);
+                    } else {
+                        hideSuggestions();
+                    }
+                });
+
+                searchInput.addEventListener('focus', function() {
+                    const query = this.value.trim();
+                    if (query.length >= 2) {
+                        fetchSearchSuggestions(query);
+                    }
+                });
+
+                searchInput.addEventListener('blur', function() {
+                    setTimeout(() => {
+                        hideSuggestions();
+                    }, 200);
+                });
+            }
+
+            function fetchSearchSuggestions(query) {
+                fetch(`/search/suggestions?q=${encodeURIComponent(query)}`)
+                    .then(response => response.json())
+                    .then(suggestions => {
+                        showSuggestions(suggestions);
+                    })
+                    .catch(error => {
+                        console.error('Error fetching suggestions:', error);
+                        hideSuggestions();
+                    });
+            }
+
+            function showSuggestions(suggestions) {
+                if (suggestions.length === 0) {
+                    hideSuggestions();
+                    return;
+                }
+
+                const html = suggestions.map(suggestion =>
+                    `<div class="search-suggestion" onclick="selectSuggestion('${suggestion}')">${suggestion}</div>`
+                ).join('');
+
+                searchSuggestions.innerHTML = html;
+                searchSuggestions.style.display = 'block';
+            }
+
+            function hideSuggestions() {
+                searchSuggestions.style.display = 'none';
+            }
+
+            window.selectSuggestion = function(suggestion) {
+                searchInput.value = suggestion;
+                hideSuggestions();
+                searchInput.closest('form').submit();
+            };
+        });
+    </script>
+</body>
+</html>

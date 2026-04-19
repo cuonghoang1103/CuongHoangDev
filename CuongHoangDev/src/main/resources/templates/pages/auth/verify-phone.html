@@ -1,0 +1,382 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Xác thực SMS - Cuong Thai</title>
+    <link rel="stylesheet" th:href="@{/css/design-system.css}">
+    <link rel="stylesheet" th:href="@{/css/modern-layout.css}">
+    <link rel="stylesheet" th:href="@{/css/components.css}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        .auth-container {
+            min-height: 100vh;
+            background: linear-gradient(135deg, #8b5cf6, #06b6d4);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: var(--space-4);
+        }
+        
+        .auth-card {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: var(--radius-xl);
+            padding: var(--space-8);
+            width: 100%;
+            max-width: 400px;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+            text-align: center;
+        }
+        
+        .auth-header {
+            margin-bottom: var(--space-6);
+        }
+        
+        .auth-logo {
+            font-size: var(--text-3xl);
+            font-weight: 800;
+            background: linear-gradient(135deg, #8b5cf6, #06b6d4);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: var(--space-2);
+        }
+        
+        .sms-icon {
+            font-size: var(--text-5xl);
+            color: var(--primary-500);
+            margin-bottom: var(--space-4);
+            animation: pulse 2s infinite;
+        }
+        
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+        
+        .verification-info {
+            background: #f0f9ff;
+            border: 1px solid #bae6fd;
+            border-radius: var(--radius-md);
+            padding: var(--space-4);
+            margin-bottom: var(--space-6);
+            text-align: left;
+        }
+        
+        .verification-info h4 {
+            color: #0369a1;
+            font-weight: 600;
+            margin-bottom: var(--space-2);
+            display: flex;
+            align-items: center;
+            gap: var(--space-2);
+        }
+        
+        .verification-info p {
+            color: #0369a1;
+            font-size: var(--text-sm);
+            margin: 0;
+        }
+        
+        .phone-display {
+            font-weight: 600;
+            color: var(--primary-600);
+        }
+        
+        .otp-input-group {
+            display: flex;
+            gap: var(--space-2);
+            justify-content: center;
+            margin: var(--space-6) 0;
+        }
+        
+        .otp-input {
+            width: 50px;
+            height: 50px;
+            text-align: center;
+            font-size: var(--text-xl);
+            font-weight: 600;
+            border: 2px solid var(--gray-300);
+            border-radius: var(--radius-md);
+            transition: border-color 0.2s;
+        }
+        
+        .otp-input:focus {
+            outline: none;
+            border-color: var(--primary-500);
+            box-shadow: 0 0 0 3px rgba(139, 92, 246, 0.1);
+        }
+        
+        .otp-input.filled {
+            border-color: var(--primary-500);
+            background: var(--primary-50);
+        }
+        
+        .btn-primary {
+            width: 100%;
+            padding: var(--space-3);
+            background: linear-gradient(135deg, #8b5cf6, #06b6d4);
+            color: white;
+            border: none;
+            border-radius: var(--radius-md);
+            font-weight: 600;
+            cursor: pointer;
+            transition: transform 0.2s;
+            margin-bottom: var(--space-4);
+        }
+        
+        .btn-primary:hover {
+            transform: translateY(-1px);
+        }
+        
+        .btn-primary:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none;
+        }
+        
+        .btn-secondary {
+            width: 100%;
+            padding: var(--space-3);
+            background: transparent;
+            color: var(--primary-600);
+            border: 1px solid var(--primary-300);
+            border-radius: var(--radius-md);
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        
+        .btn-secondary:hover {
+            background: var(--primary-50);
+        }
+        
+        .countdown {
+            font-size: var(--text-sm);
+            color: var(--gray-600);
+            margin-top: var(--space-2);
+        }
+        
+        .countdown.expired {
+            color: var(--red-600);
+        }
+        
+        .auth-links {
+            text-align: center;
+            margin-top: var(--space-6);
+        }
+        
+        .auth-links a {
+            color: var(--primary-600);
+            text-decoration: none;
+            font-size: var(--text-sm);
+        }
+        
+        .auth-links a:hover {
+            text-decoration: underline;
+        }
+        
+        .alert {
+            padding: var(--space-3);
+            border-radius: var(--radius-md);
+            margin-bottom: var(--space-4);
+            font-size: var(--text-sm);
+        }
+        
+        .alert-error {
+            background: #fef2f2;
+            color: #dc2626;
+            border: 1px solid #fecaca;
+        }
+        
+        .alert-success {
+            background: #f0fdf4;
+            color: #16a34a;
+            border: 1px solid #bbf7d0;
+        }
+    </style>
+</head>
+<body>
+    <div class="auth-container">
+        <div class="auth-card">
+            <div class="auth-header">
+                <div class="sms-icon">
+                    <i class="fas fa-sms"></i>
+                </div>
+                <h1 class="auth-logo">Cuong Thai</h1>
+                <p class="text-gray-600">Xác thực số điện thoại</p>
+            </div>
+            
+            <!-- Verification Info -->
+            <div class="verification-info">
+                <h4>
+                    <i class="fas fa-mobile-alt"></i>
+                    Mã xác thực đã được gửi
+                </h4>
+                <p>
+                    Chúng tôi đã gửi mã 6 chữ số đến số điện thoại 
+                    <span class="phone-display" th:text="${phoneNumber}">+84123456789</span>
+                </p>
+            </div>
+            
+            <!-- Error/Success Messages -->
+            <div th:if="${error}" class="alert alert-error">
+                <i class="fas fa-exclamation-circle"></i>
+                <span th:text="${error}"></span>
+            </div>
+            
+            <div th:if="${message}" class="alert alert-success">
+                <i class="fas fa-check-circle"></i>
+                <span th:text="${message}"></span>
+            </div>
+            
+            <!-- OTP Verification Form -->
+            <form th:action="@{/auth/verify-phone}" method="post" id="otpForm">
+                <input type="hidden" name="phoneNumber" th:value="${phoneNumber}">
+                
+                <div class="otp-input-group">
+                    <input type="text" class="otp-input" maxlength="1" pattern="[0-9]" required>
+                    <input type="text" class="otp-input" maxlength="1" pattern="[0-9]" required>
+                    <input type="text" class="otp-input" maxlength="1" pattern="[0-9]" required>
+                    <input type="text" class="otp-input" maxlength="1" pattern="[0-9]" required>
+                    <input type="text" class="otp-input" maxlength="1" pattern="[0-9]" required>
+                    <input type="text" class="otp-input" maxlength="1" pattern="[0-9]" required>
+                </div>
+                
+                <input type="hidden" name="verificationCode" id="verificationCode">
+                
+                <button type="submit" class="btn-primary" id="verifyBtn" disabled>
+                    <i class="fas fa-check"></i> Xác thực
+                </button>
+            </form>
+            
+            <!-- Resend Button -->
+            <button type="button" class="btn-secondary" id="resendBtn" disabled>
+                <i class="fas fa-redo"></i> Gửi lại mã
+            </button>
+            
+            <div class="countdown" id="countdown">
+                Gửi lại mã sau: <span id="timer">05:00</span>
+            </div>
+            
+            <!-- Auth Links -->
+            <div class="auth-links">
+                <div class="mb-2">
+                    <a th:href="@{/auth/register-phone}">
+                        <i class="fas fa-arrow-left"></i> Thay đổi số điện thoại
+                    </a>
+                </div>
+                <div class="mb-2">
+                    <a th:href="@{/auth/register}">Đăng ký bằng email</a>
+                </div>
+                <div class="mt-4">
+                    <a th:href="@{/}" class="text-gray-500">
+                        <i class="fas fa-home"></i> Về trang chủ
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        const otpInputs = document.querySelectorAll('.otp-input');
+        const verificationCodeInput = document.getElementById('verificationCode');
+        const verifyBtn = document.getElementById('verifyBtn');
+        const resendBtn = document.getElementById('resendBtn');
+        const timerElement = document.getElementById('timer');
+        const countdownElement = document.getElementById('countdown');
+        
+        let timeLeft = 300; // 5 minutes in seconds
+        
+        // OTP input handling
+        otpInputs.forEach((input, index) => {
+            input.addEventListener('input', function() {
+                // Only allow numbers
+                this.value = this.value.replace(/[^0-9]/g, '');
+                
+                if (this.value) {
+                    this.classList.add('filled');
+                    // Move to next input
+                    if (index < otpInputs.length - 1) {
+                        otpInputs[index + 1].focus();
+                    }
+                } else {
+                    this.classList.remove('filled');
+                }
+                
+                updateVerificationCode();
+            });
+            
+            input.addEventListener('keydown', function(e) {
+                // Handle backspace
+                if (e.key === 'Backspace' && !this.value && index > 0) {
+                    otpInputs[index - 1].focus();
+                    otpInputs[index - 1].value = '';
+                    otpInputs[index - 1].classList.remove('filled');
+                    updateVerificationCode();
+                }
+                
+                // Handle paste
+                if (e.key === 'v' && (e.ctrlKey || e.metaKey)) {
+                    e.preventDefault();
+                    navigator.clipboard.readText().then(text => {
+                        const digits = text.replace(/[^0-9]/g, '').slice(0, 6);
+                        digits.split('').forEach((digit, i) => {
+                            if (otpInputs[i]) {
+                                otpInputs[i].value = digit;
+                                otpInputs[i].classList.add('filled');
+                            }
+                        });
+                        updateVerificationCode();
+                    });
+                }
+            });
+        });
+        
+        function updateVerificationCode() {
+            const code = Array.from(otpInputs).map(input => input.value).join('');
+            verificationCodeInput.value = code;
+            verifyBtn.disabled = code.length !== 6;
+        }
+        
+        // Countdown timer
+        function updateTimer() {
+            const minutes = Math.floor(timeLeft / 60);
+            const seconds = timeLeft % 60;
+            timerElement.textContent = `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+            
+            if (timeLeft <= 0) {
+                countdownElement.classList.add('expired');
+                countdownElement.innerHTML = '<i class="fas fa-exclamation-triangle"></i> Mã xác thực đã hết hạn';
+                resendBtn.disabled = false;
+                resendBtn.innerHTML = '<i class="fas fa-redo"></i> Gửi lại mã';
+            } else {
+                timeLeft--;
+                setTimeout(updateTimer, 1000);
+            }
+        }
+        
+        // Start countdown
+        updateTimer();
+        
+        // Resend code
+        resendBtn.addEventListener('click', function() {
+            // TODO: Implement resend functionality
+            alert('Tính năng gửi lại mã sẽ được triển khai sau');
+        });
+        
+        // Auto-focus first input
+        otpInputs[0].focus();
+        
+        // Auto-hide alerts after 5 seconds
+        setTimeout(() => {
+            const alerts = document.querySelectorAll('.alert');
+            alerts.forEach(alert => {
+                alert.style.opacity = '0';
+                alert.style.transform = 'translateY(-10px)';
+                setTimeout(() => alert.remove(), 300);
+            });
+        }, 5000);
+    </script>
+</body>
+</html>

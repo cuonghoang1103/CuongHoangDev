@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>System Settings - Admin</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+    <link rel="stylesheet" th:href="@{/css/pages/admin.css}">
+</head>
+<body>
+    <div th:replace="~{layout/admin-layout :: admin-layout}">
+        <main class="admin-content">
+            <div class="admin-header">
+                <h1>System Settings</h1>
+            </div>
+            
+            <div class="settings-tabs">
+                <button class="tab-btn active" data-tab="general">General</button>
+                <button class="tab-btn" data-tab="security">Security</button>
+                <button class="tab-btn" data-tab="email">Email</button>
+                <button class="tab-btn" data-tab="appearance">Appearance</button>
+            </div>
+            
+            <div class="tab-content active" id="general">
+                <form class="settings-form">
+                    <div class="form-group">
+                        <label for="siteName">Site Name</label>
+                        <input type="text" id="siteName" name="siteName" value="CuongHoang Dev">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="siteDescription">Site Description</label>
+                        <textarea id="siteDescription" name="siteDescription">Professional Portfolio Website</textarea>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="contactEmail">Contact Email</label>
+                        <input type="email" id="contactEmail" name="contactEmail" value="contact@cuonghoang.dev">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="timezone">Timezone</label>
+                        <select id="timezone" name="timezone">
+                            <option value="Asia/Ho_Chi_Minh">Asia/Ho_Chi_Minh</option>
+                            <option value="UTC">UTC</option>
+                        </select>
+                    </div>
+                    
+                    <button type="submit" class="btn btn-primary">Save Changes</button>
+                </form>
+            </div>
+            
+            <div class="tab-content" id="security">
+                <form class="settings-form">
+                    <div class="form-group">
+                        <label for="jwtExpiration">JWT Token Expiration (hours)</label>
+                        <input type="number" id="jwtExpiration" name="jwtExpiration" value="24">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="maxLoginAttempts">Max Login Attempts</label>
+                        <input type="number" id="maxLoginAttempts" name="maxLoginAttempts" value="5">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label>
+                            <input type="checkbox" name="enableTwoFactor" checked>
+                            Enable Two-Factor Authentication
+                        </label>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label>
+                            <input type="checkbox" name="enableCaptcha">
+                            Enable CAPTCHA on Login
+                        </label>
+                    </div>
+                    
+                    <button type="submit" class="btn btn-primary">Save Security Settings</button>
+                </form>
+            </div>
+            
+            <div class="tab-content" id="email">
+                <form class="settings-form">
+                    <div class="form-group">
+                        <label for="smtpHost">SMTP Host</label>
+                        <input type="text" id="smtpHost" name="smtpHost" value="smtp.gmail.com">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="smtpPort">SMTP Port</label>
+                        <input type="number" id="smtpPort" name="smtpPort" value="587">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="smtpUsername">SMTP Username</label>
+                        <input type="text" id="smtpUsername" name="smtpUsername">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="smtpPassword">SMTP Password</label>
+                        <input type="password" id="smtpPassword" name="smtpPassword">
+                    </div>
+                    
+                    <button type="submit" class="btn btn-primary">Save Email Settings</button>
+                    <button type="button" class="btn btn-secondary">Test Email</button>
+                </form>
+            </div>
+        </main>
+    </div>
+    
+    <script th:src="@{/js/main.js}"></script>
+    <script th:src="@{/js/pages/admin.js}"></script>
+</body>
+</html>

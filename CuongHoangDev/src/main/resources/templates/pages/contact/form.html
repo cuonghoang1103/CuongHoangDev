@@ -1,0 +1,13 @@
+<!DOCTYPE html>
+<html lang="vi" xmlns:th="http://www.thymeleaf.org"
+      th:replace="layout/master :: master(~{::title}, ~{::content})">
+<head>
+    <title th:text="${title}">Liên hệ</title>
+</head>
+<body>
+    <div th:fragment="content">
+        <!-- Include original contact design -->
+        <div th:include="pages/contact :: body"></div>
+    </div>
+</body>
+</html>

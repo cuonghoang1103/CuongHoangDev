@@ -1,0 +1,116 @@
+/* ===== PERFORMANCE OPTIMIZATIONS ===== */
+
+/* Critical CSS - Above the fold content */
+.hero-section, .header, .main-content {
+  contain: layout style paint;
+}
+
+/* Optimize font loading */
+@font-face {
+  font-family: 'Inter';
+  font-display: swap;
+  src: url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+}
+
+/* Optimize images */
+img {
+  loading: lazy;
+  decoding: async;
+}
+
+/* Critical images should load immediately */
+.hero-avatar, .logo {
+  loading: eager;
+}
+
+/* Optimize animations for performance */
+@keyframes optimizedFadeIn {
+  from {
+    opacity: 0;
+    transform: translate3d(0, 20px, 0);
+  }
+  to {
+    opacity: 1;
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+/* GPU acceleration for smooth animations */
+.card, .btn, .playlist-card, .subject-card {
+  transform: translateZ(0);
+  backface-visibility: hidden;
+  perspective: 1000px;
+}
+
+/* Optimize scroll performance */
+.main-content {
+  overflow-x: hidden;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+/* Reduce paint operations */
+.sidebar {
+  contain: strict;
+}
+
+/* Optimize hover states */
+@media (hover: hover) {
+  .card:hover, .btn:hover {
+    will-change: transform;
+  }
+}
+
+/* Remove will-change after animation */
+.animation-complete {
+  will-change: auto;
+}
+
+/* Optimize for mobile performance */
+@media (max-width: 768px) {
+  .gradient-animation::before {
+    animation-duration: 30s; /* Slower on mobile */
+  }
+  
+  .float {
+    animation-duration: 8s; /* Slower float on mobile */
+  }
+}
+
+/* Preload critical resources */
+.preload-critical {
+  content: '';
+  position: absolute;
+  left: -9999px;
+  background-image: url('/img/cuongthai.jpg');
+}
+
+/* Optimize CSS Grid and Flexbox */
+.grid {
+  contain: layout;
+}
+
+.flex {
+  contain: layout;
+}
+
+/* Optimize form performance */
+.form-input, .form-textarea {
+  contain: layout style;
+}
+
+/* Reduce reflow/repaint */
+.sticky {
+  contain: layout style paint;
+}
+
+/* Optimize table performance */
+.table {
+  table-layout: fixed;
+  contain: layout;
+}
+
+/* Critical CSS inlining hint */
+.above-fold {
+  contain: layout style paint;
+}

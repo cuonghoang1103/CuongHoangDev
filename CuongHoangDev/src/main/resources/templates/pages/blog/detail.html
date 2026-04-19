@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title th:text="${pageTitle} + ' - CuongHoang Dev'">Blog Detail - CuongHoang Dev</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+    <link rel="stylesheet" th:href="@{/css/pages/blog.css}">
+</head>
+<body>
+    <div th:replace="~{layout/header :: header}"></div>
+    
+    <main class="blog-detail-page">
+        <div class="container">
+            <article class="blog-post">
+                <header class="post-header">
+                    <h1 class="post-title">Blog Post Title</h1>
+                    <div class="post-meta">
+                        <span class="post-date">Published on March 15, 2024</span>
+                        <span class="post-author">by CuongHoang</span>
+                        <span class="post-category">Technology</span>
+                    </div>
+                </header>
+                
+                <div class="post-content">
+                    <p>Blog post content will be displayed here...</p>
+                </div>
+                
+                <footer class="post-footer">
+                    <div class="post-tags">
+                        <span class="tag">Java</span>
+                        <span class="tag">Spring Boot</span>
+                        <span class="tag">Web Development</span>
+                    </div>
+                    
+                    <div class="post-actions">
+                        <button class="btn-like">Like</button>
+                        <button class="btn-share">Share</button>
+                    </div>
+                </footer>
+            </article>
+            
+            <section class="comments-section">
+                <h3>Comments</h3>
+                <div class="comments-list">
+                    <!-- Comments will be loaded here -->
+                </div>
+            </section>
+        </div>
+    </main>
+    
+    <div th:replace="~{layout/footer :: footer}"></div>
+    
+    <script th:src="@{/js/main.js}"></script>
+</body>
+</html>

@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title th:text="${pageTitle} + ' - CuongHoang Dev'">Blog Categories - CuongHoang Dev</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+    <link rel="stylesheet" th:href="@{/css/pages/blog.css}">
+</head>
+<body>
+    <div th:replace="~{layout/header :: header}"></div>
+    
+    <main class="blog-categories-page">
+        <div class="container">
+            <h1>Blog Categories</h1>
+            
+            <div class="categories-grid">
+                <div class="category-card">
+                    <h3>Technology</h3>
+                    <p>Latest tech trends and tutorials</p>
+                    <span class="post-count">15 posts</span>
+                </div>
+                
+                <div class="category-card">
+                    <h3>Programming</h3>
+                    <p>Coding tips and best practices</p>
+                    <span class="post-count">12 posts</span>
+                </div>
+                
+                <div class="category-card">
+                    <h3>Web Development</h3>
+                    <p>Frontend and backend development</p>
+                    <span class="post-count">8 posts</span>
+                </div>
+                
+                <div class="category-card">
+                    <h3>Personal</h3>
+                    <p>Personal thoughts and experiences</p>
+                    <span class="post-count">5 posts</span>
+                </div>
+            </div>
+        </div>
+    </main>
+    
+    <div th:replace="~{layout/footer :: footer}"></div>
+    
+    <script th:src="@{/js/main.js}"></script>
+</body>
+</html>

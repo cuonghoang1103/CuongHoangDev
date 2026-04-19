@@ -1,0 +1,159 @@
+# ===================================
+# PRODUCTION ENVIRONMENT CONFIG
+# ===================================
+
+spring:
+  # ===== DATABASE CONFIGURATION =====
+  datasource:
+    url: ${DATABASE_URL:jdbc:mysql://localhost:3306/cuonghoangdev_prod}
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    username: ${DATABASE_USERNAME:cuonghoang}
+    password: ${DATABASE_PASSWORD:your-secure-password}
+    hikari:
+      maximum-pool-size: 20
+      minimum-idle: 5
+      idle-timeout: 300000
+      max-lifetime: 1200000
+      connection-timeout: 20000
+
+  jpa:
+    hibernate:
+      ddl-auto: validate
+    show-sql: false
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.MySQLDialect
+        format_sql: false
+        jdbc:
+          batch_size: 20
+        order_inserts: true
+        order_updates: true
+        jdbc.batch_versioned_data: true
+
+  # ===== THYMELEAF CONFIGURATION =====
+  thymeleaf:
+    cache: true
+    prefix: classpath:/templates/
+    suffix: .html
+
+  flyway:
+    enabled: true
+
+
+  # ===== SECURITY CONFIGURATION =====
+  security:
+    oauth2:
+      client:
+        registration:
+          google:
+            client-id: ${GOOGLE_CLIENT_ID}
+            client-secret: ${GOOGLE_CLIENT_SECRET}
+          github:
+            client-id: ${GITHUB_CLIENT_ID}
+            client-secret: ${GITHUB_CLIENT_SECRET}
+
+  # ===== MAIL CONFIGURATION =====
+  mail:
+    host: ${MAIL_HOST:smtp.gmail.com}
+    port: ${MAIL_PORT:587}
+    username: ${MAIL_USERNAME}
+    password: ${MAIL_PASSWORD}
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true
+            required: true
+          ssl:
+            trust: ${MAIL_HOST:smtp.gmail.com}
+
+# ===== SERVER CONFIGURATION =====
+server:
+  port: ${PORT:8080}
+  servlet:
+    context-path: /
+  error:
+    whitelabel:
+      enabled: false
+    include-stacktrace: never
+    include-message: never
+  compression:
+    enabled: true
+    mime-types: text/html,text/xml,text/plain,text/css,text/javascript,application/javascript,application/json
+    min-response-size: 1024
+
+# ===== LOGGING CONFIGURATION =====
+logging:
+  level:
+    root: WARN
+    dev.cuonghoang: INFO
+    org.springframework.security: WARN
+    org.springframework.web: WARN
+    org.hibernate.SQL: WARN
+  pattern:
+    console: "%d{yyyy-MM-dd HH:mm:ss} [%thread] %-5level %logger{36} - %msg%n"
+    file: "%d{yyyy-MM-dd HH:mm:ss} [%thread] %-5level %logger{36} - %msg%n"
+  file:
+    name: /var/log/cuonghoangdev/application.log
+    max-size: 100MB
+    max-history: 30
+
+# ===== CUSTOM APPLICATION PROPERTIES =====
+app:
+  # JWT Configuration (Secure for production)
+  jwt:
+    secret: ${JWT_SECRET}
+    expiration: 3600000 # 1 hour
+    refresh-expiration: 86400000 # 24 hours
+
+  # File Upload Configuration
+  upload:
+    path: ${UPLOAD_PATH:/var/uploads/cuonghoangdev/}
+    max-size: 5242880 # 5MB
+
+  # Admin Configuration
+  admin:
+    default-username: ${ADMIN_USERNAME}
+    default-password: ${ADMIN_PASSWORD}
+    default-email: ${ADMIN_EMAIL}
+
+  # OAuth2 Configuration
+  oauth2:
+    success-redirect-url: ${BASE_URL:https://cuonghoang.dev}/?oauth2=success
+    failure-redirect-url: ${BASE_URL:https://cuonghoang.dev}/auth/login?error=oauth2_failed
+
+  # Cache Configuration
+  cache:
+    enabled: true
+    ttl: 3600 # 1 hour
+
+  # Email Templates
+  mail:
+    from: ${MAIL_FROM:noreply@cuonghoang.dev}
+
+# ===== MANAGEMENT & ACTUATOR =====
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info,metrics
+      base-path: /actuator
+  endpoint:
+    health:
+      show-details: when-authorized
+    shutdown:
+      enabled: false
+  info:
+    env:
+      enabled: true
+  security:
+    enabled: true
+
+# ===== SSL CONFIGURATION (if needed) =====
+# server:
+#   ssl:
+#     enabled: true
+#     key-store: ${SSL_KEYSTORE_PATH}
+#     key-store-password: ${SSL_KEYSTORE_PASSWORD}
+#     key-store-type: PKCS12
